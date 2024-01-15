@@ -1,44 +1,9 @@
-import {useState} from "react";
+import useProducts from "../../../../hooks/useProducts";
 import {Button, Container} from "../../../atoms";
-import axios from "axios";
-import {useEffect} from "react";
 import {Link} from "react-router-dom";
-import {rapidApiHost, rapidApiKey, rapidUrl} from "../../../../contants";
 
 function HomeSeller() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const options = {
-        method: "GET",
-        url: rapidUrl,
-        params: {
-          country: "us",
-          lang: "en",
-          currentpage: "0",
-          pagesize: "30",
-          categories: "men_all",
-          concepts: "H&M MAN",
-        },
-        headers: {
-          "X-RapidAPI-Key": rapidApiKey,
-          "X-RapidAPI-Host": rapidApiHost,
-        },
-      };
-
-      try {
-        const response = await axios.request(options);
-        const responseData = response.data.results;
-
-        setData(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const products = useProducts();
 
   return (
     <Container className="mt-10">
@@ -46,16 +11,17 @@ function HomeSeller() {
         <span className="font-semibold">By Seller</span>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 justify-center mt-5 gap-5">
-        {data.map((item, i) => (
+        {products.map((item, i) => (
           <div
             key={i}
             className="p-2 rounded-lg hover:bg-gray-200 trans-300 group relative"
           >
-            <Link to={item.pk}>
-              <div>
+            <Link to={`/detail/${item.id}`}>
+              <div className="h-60 overflow-hidden flex items-center">
                 <img
-                  src={item.allArticleImages[1]}
-                  alt={item.name}
+                  // src={item.img}
+                  src="http://img.ltwebstatic.com/images3_pi/2022/09/19/16635517058ad77c184ddd26b1a059ca03ccd24089_thumbnail_405x552.jpg"
+                  alt={item.product_name}
                   className="rounded-lg"
                 />
               </div>
@@ -64,10 +30,11 @@ function HomeSeller() {
                   + Add to cart
                 </Button>
               </div>
-              <div className="flex flex-col gap-3 mt-5 md:h-24 justify-between">
-                <h2 className="font-bold">{item.name}</h2>
-                <span>{item.categoryName}</span>
-                <span className="font-bold">{item.price.formattedValue}</span>
+              <div className="flex flex-col justify-between gap-1 mt-5 md:h-40">
+                <h2 className="font-bold text-sm">{item.product_name}</h2>
+                <span>{item.category}</span>
+                <span className="text-xs">Sold {item.sold}</span>
+                <span className="font-bold">{item.price}</span>
               </div>
             </Link>
           </div>

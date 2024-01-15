@@ -1,27 +1,27 @@
 export const categories = [
   {
     img: "../img/2.jpg",
-    name: "Casual Wear",
+    name: "Casual Style",
   },
   {
     img: "../img/1.jpg",
-    name: "Formal Wear",
+    name: "Formal Style",
   },
   {
     img: "../img/3.jpg",
-    name: "Athleisure Wear",
+    name: "Athleisure Style",
   },
   {
     img: "../img/5.jpg",
-    name: "Streetwear Wear",
+    name: "Streetwear Style",
   },
   {
     img: "../img/4.jpg",
-    name: "Minimalist Wear",
+    name: "Minimalist Style",
   },
   {
     img: "../img/6.jpg",
-    name: "Vintage/Retro Wear",
+    name: "Vintage/Retro Style",
   },
 ];
 

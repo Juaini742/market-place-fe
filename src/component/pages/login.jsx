@@ -1,6 +1,34 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {unwrapResult} from "@reduxjs/toolkit";
+import {useState} from "react";
+import {loginAction} from "../../store/actions/user.action";
 
 function LoginPage() {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    phone: "",
+  });
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData((prev) => ({...prev, [name]: value}));
+  };
+
+  const hanldeSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const actLogin = await dispatch(loginAction(formData));
+
+      return unwrapResult(actLogin);
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  };
+
   return (
     <>
       <div className="container min-h-screen flex  justify-between items-center gap-5">
@@ -8,7 +36,7 @@ function LoginPage() {
           <img src="../img/login.svg" alt="login" className="" />
         </div>
         <div className="box-border md:w-1/2">
-          <form>
+          <form onSubmit={hanldeSubmit}>
             <div className="">
               <h1 className="text-2xl font-semibold">Welcome to Myfashion</h1>
               <p className="text-gray-400">please login here</p>
@@ -21,6 +49,9 @@ function LoginPage() {
               <input
                 type="email"
                 id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Your email..."
                 className="h-10 border border-black pl-3 rounded-md text-sm"
               />
@@ -32,6 +63,9 @@ function LoginPage() {
               <input
                 type="password"
                 id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="xxxxxxxxxxxxx"
                 className="h-10 border border-black pl-3 rounded-md text-sm"
               />
@@ -63,9 +97,7 @@ function LoginPage() {
               </p>
             </div>
             <div className="mt-5">
-              <Link to="/">
-                <button className="py-3 w-full btn-primary">Login</button>
-              </Link>
+              <button className="py-3 w-full btn-primary">Login</button>
             </div>
           </form>
         </div>

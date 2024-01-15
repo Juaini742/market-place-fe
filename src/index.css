@@ -13,10 +13,21 @@ body {
 .btn-primary {
   @apply bg-black text-white rounded-lg hover:bg-gray-900 hover:transition duration-300;
 }
+.btn-primary-no-rounded {
+  @apply bg-black text-white hover:bg-gray-900 hover:transition duration-300;
+}
+.btn-primary-rounded {
+  @apply bg-black text-white rounded-full hover:bg-gray-900 hover:transition duration-300;
+}
+.btn-gray {
+  @apply bg-gray-300 rounded-lg hover:bg-black hover:text-white hover:transition duration-300;
+}
 .btn-white {
   @apply bg-white text-black rounded-lg hover:bg-gray-300 hover:transition duration-300;
 }
-
 .trans-300 {
   @apply hover:transition ease-in-out duration-300;
+}
+.gray-hover {
+  @apply hover:bg-black hover:text-white trans-300;
 }

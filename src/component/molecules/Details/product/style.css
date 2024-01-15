@@ -1,0 +1,23 @@
+/* #lang-1:checked ~ .label-1,
+#lang-2:checked ~ .label-2,
+#lang-3:checked ~ .label-3,
+#lang-4:checked ~ .label-4 {
+  @apply bg-black text-white;
+} */
+#lang-0:checked ~ .label-0,
+#lang-1:checked ~ .label-1,
+#lang-2:checked ~ .label-2,
+#lang-3:checked ~ .label-3 {
+  @apply bg-black text-white;
+}
+
+/* #size-1:checked ~ .label-size-1,
+#size-2:checked ~ .label-size-2,
+#size-3:checked ~ .label-size-3 {
+  @apply bg-black text-white;
+} */
+#size-0:checked ~ .label-size-0,
+#size-1:checked ~ .label-size-1,
+#size-2:checked ~ .label-size-2 {
+  @apply bg-black text-white;
+}

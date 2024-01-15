@@ -1,4 +1,6 @@
 import {SlBasket} from "react-icons/sl";
+import {Link} from "react-router-dom";
+import {Button} from "../atoms";
 
 function Navbar() {
   return (
@@ -14,8 +16,8 @@ function Navbar() {
             className="text-sm w-full md:w-80 h-9 pl-3 bg-gray-300 rounded-md text-black"
           />
         </div>
-        <div className="fixed z-50 md:static bottom-0 left-0 right-0 h-10 md:h-full bg-gray-500 text-white md:text-black md:bg-transparent flex justify-center items-center md:flex">
-          <ul className="flex gap-10 md:gap-3 ">
+        <div className="fixed z-50 md:static bottom-0 left-0 right-0 h-10 md:h-full bg-white/30 backdrop-blur-lg  md:text-black md:bg-transparent flex justify-center items-center md:flex">
+          <ul className="flex gap-10 md:gap-3 lg:gap-16 items-center">
             <li>
               <a href="/">Home</a>
             </li>
@@ -25,11 +27,16 @@ function Navbar() {
             <li>
               <a href="/profile">Profile</a>
             </li>
+            <li>
+              <Button>Logout</Button>
+            </li>
           </ul>
         </div>
-        <button className="h-10 w-10 bg-gray-300 rounded-full font-bold flex justify-center items-center">
-          <SlBasket />
-        </button>
+        <Link to="/cart">
+          <button className="h-10 w-10 bg-gray-300 rounded-full font-bold flex justify-center items-center">
+            <SlBasket />
+          </button>
+        </Link>
       </div>
     </nav>
   );

@@ -7,6 +7,15 @@ function Button(props) {
     case "primary":
       buttonStyle += "btn-primary";
       break;
+    case "primary-no-rounded":
+      buttonStyle += "btn-primary-no-rounded";
+      break;
+    case "primary-rounded":
+      buttonStyle += "btn-primary-rounded";
+      break;
+    case "gray":
+      buttonStyle += "btn-gray";
+      break;
     case "white":
       buttonStyle += "btn-white";
       break;
