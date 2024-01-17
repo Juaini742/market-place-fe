@@ -2,11 +2,14 @@
 import {BsPlus} from "react-icons/bs";
 import {FaTrashCan} from "react-icons/fa6";
 import {HiMinus} from "react-icons/hi";
+import useCart from "../../../../hooks/useCart";
 
-function CartProduct({products}) {
+function CartProduct() {
+  const cart = useCart();
+
   return (
     <div className="flex flex-col gap-4">
-      {products.slice(3, 6).map((item, index) => (
+      {cart.map((item, index) => (
         <div key={index} className="flex justify-between flex-col md:flex-row">
           <div>
             <span className="font-bold">Product</span>
@@ -16,11 +19,14 @@ function CartProduct({products}) {
               </div>
               <div className="mt-3 flex gap-2">
                 <div className="w-16 overflow-hidden flex items-center">
-                  <img src={item.img} alt={item.product_name} />
+                  <img
+                    src={item.product_id.img}
+                    alt={item.product_id.product_name}
+                  />
                 </div>
                 <div className="flex flex-col w-full md:w-72">
                   <label htmlFor={`product-${index}`} className="font-bold">
-                    {item.product_name}
+                    {item.product_id.product_name}
                   </label>
                   <span>Size: S</span>
                 </div>
@@ -31,7 +37,7 @@ function CartProduct({products}) {
           <div className="flex justify-between gap-3">
             <div className="flex flex-col gap-3 lg:w-36 ">
               <span className="font-bold">Price</span>
-              <span>IDR. {item.price}</span>
+              <span>IDR. {item.product_id.price}</span>
             </div>
             <div className="md:w-36">
               <span className="font-bold">Quantity</span>
@@ -48,7 +54,7 @@ function CartProduct({products}) {
 
             <div className="flex flex-col gap-3  lg:w-36 ">
               <span className="font-bold">Gross Amount</span>
-              <span>IDR. {item.price}</span>
+              <span>IDR. {item.product_id.price}</span>
             </div>
 
             <div className=" text-red-500 pt-9">

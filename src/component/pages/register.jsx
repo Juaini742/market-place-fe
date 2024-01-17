@@ -38,17 +38,6 @@ function RegisterPage() {
               <h1 className="text-2xl font-semibold">Create New Account</h1>
               <p className="text-gray-400">please enter details</p>
             </div>
-            <div className="mt-8 flex gap-3 flex-col">
-              <label htmlFor="first_name" className="text-sm">
-                First Name
-              </label>
-              <input
-                type="text"
-                id="first_name"
-                placeholder="Your first name..."
-                className="h-10 border border-black pl-3 rounded-md text-sm"
-              />
-            </div>
             <div className="mt-5 flex gap-3 flex-col">
               <label htmlFor="last_name" className="text-sm">
                 Username

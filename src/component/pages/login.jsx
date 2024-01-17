@@ -6,7 +6,7 @@ import {loginAction} from "../../store/actions/user.action";
 
 function LoginPage() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,7 +21,7 @@ function LoginPage() {
   const hanldeSubmit = async (e) => {
     e.preventDefault();
     try {
-      const actLogin = await dispatch(loginAction(formData));
+      const actLogin = await dispatch(loginAction({formData, navigate}));
 
       return unwrapResult(actLogin);
     } catch (error) {

@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import {Button} from "../../../atoms";
 
 function HomeHero() {
@@ -20,9 +21,11 @@ function HomeHero() {
             with vibrant colors that reflect your personality
           </p>
           <div className="flex justify-center mt-4">
-            <Button variant="white" className="py-2 px-14">
-              View more
-            </Button>
+            <Link to="/shop">
+              <Button variant="white" className="py-2 px-14">
+                View more
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

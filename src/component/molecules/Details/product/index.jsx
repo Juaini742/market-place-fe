@@ -7,15 +7,30 @@ import DescriptionProduct from "./description";
 import RatingProduct from "./rating";
 import RecomendProduct from "./recomend";
 import useProducts from "../../../../hooks/useProducts";
+import {useDispatch} from "react-redux";
 import "./style.css";
+import {addCartAction} from "../../../../store/actions/cart.action";
+import useToken from "../../../../hooks/useToken";
 
 function DetailsProduct() {
   const {id} = useParams();
   const products = useProducts();
+  const dispatch = useDispatch();
+  const token = useToken();
   const selectedProduct = products && products.find((item) => item.id === id);
   const [selectedComonent, setSelectedComonent] = useState("description");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [isSizeSelected, setIsSizeSelected] = useState(false);
+  // const [formData, setFormData] = useState({
+  //   quantity: 1,
+  // });
+
+  // const hanldeQuantityChange = (e) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   const handleColorChange = () => {
     setIsColorSelected(true);
@@ -33,6 +48,10 @@ function DetailsProduct() {
     setSelectedComonent("rating");
   };
 
+  const hanldeCart = (id) => {
+    dispatch(addCartAction({token, id, dispatch}));
+  };
+
   if (!selectedProduct) {
     return console.log("");
   }
@@ -41,11 +60,7 @@ function DetailsProduct() {
     <Container className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
         <div className="h-full md:h-[540px] lg:h-[700px] flex items-center overflow-hidden">
-          {/* <img src={selectedProduct.img} alt={selectedProduct.product_name} /> */}
-          <img
-            src="http://img.ltwebstatic.com/images3_pi/2022/09/19/16635517058ad77c184ddd26b1a059ca03ccd24089_thumbnail_405x552.jpg"
-            alt=""
-          />
+          <img src={selectedProduct.img} alt={selectedProduct.product_name} />
         </div>
         <div className="flex flex-col gap-3">
           <div className="border-b-2 pb-5">
@@ -120,6 +135,7 @@ function DetailsProduct() {
             </div>
             <div className="w-full">
               <Button
+                onClick={() => hanldeCart(selectedProduct.id)}
                 variant="primary-rounded"
                 className={`py-2 w-full ${
                   isColorSelected && isSizeSelected
@@ -164,7 +180,9 @@ function DetailsProduct() {
           </button>
         </div>
         <div className="mt-5">
-          {selectedComonent === "description" && <DescriptionProduct />}
+          {selectedComonent === "description" && (
+            <DescriptionProduct selectedProduct={selectedProduct} />
+          )}
           {selectedComonent === "rating" && <RatingProduct />}
         </div>
       </div>

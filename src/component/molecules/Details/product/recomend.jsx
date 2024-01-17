@@ -5,7 +5,7 @@ import {Button} from "../../../atoms";
 function RecomendProduct({products}) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 justify-center mt-5 gap-5">
-      {products.slice(0, 4).map((item, i) => (
+      {products.slice(10, 14).map((item, i) => (
         <div
           key={i}
           className="p-2 rounded-lg hover:bg-gray-200 trans-300 group relative"
@@ -13,8 +13,7 @@ function RecomendProduct({products}) {
           <Link to={`/detail/${item.id}`}>
             <div className="h-60 overflow-hidden flex items-center">
               <img
-                // src={item.img}
-                src="http://img.ltwebstatic.com/images3_pi/2022/09/19/16635517058ad77c184ddd26b1a059ca03ccd24089_thumbnail_405x552.jpg"
+                src={item.img}
                 alt={item.product_name}
                 className="rounded-lg"
               />

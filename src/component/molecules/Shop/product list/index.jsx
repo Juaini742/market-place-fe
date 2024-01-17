@@ -15,8 +15,7 @@ function ShopProductList() {
           <Link to={`/detail/${item.id}`}>
             <div className="h-60 overflow-hidden flex items-center">
               <img
-                // src={item.img}
-                src="http://img.ltwebstatic.com/images3_pi/2022/09/19/16635517058ad77c184ddd26b1a059ca03ccd24089_thumbnail_405x552.jpg"
+                src={item.img}
                 alt={item.product_name}
                 className="rounded-lg"
               />

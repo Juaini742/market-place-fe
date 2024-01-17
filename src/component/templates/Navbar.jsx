@@ -1,8 +1,20 @@
 import {SlBasket} from "react-icons/sl";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Button} from "../atoms";
+import {useDispatch} from "react-redux";
+import useToken from "../../hooks/useToken";
+import {logoutAction} from "../../store/actions/user.action";
+import useCart from "../../hooks/useCart";
 
 function Navbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cart = useCart();
+  const token = useToken();
+
+  const hanldeLogout = () => {
+    dispatch(logoutAction({token, navigate}));
+  };
   return (
     <nav className="bg-white border-b-2">
       <div className="w-[90%] mx-auto flex justify-between items-center h-16">
@@ -28,13 +40,16 @@ function Navbar() {
               <a href="/profile">Profile</a>
             </li>
             <li>
-              <Button>Logout</Button>
+              <Button onClick={hanldeLogout}>Logout</Button>
             </li>
           </ul>
         </div>
         <Link to="/cart">
-          <button className="h-10 w-10 bg-gray-300 rounded-full font-bold flex justify-center items-center">
+          <button className="relative h-10 w-10 bg-gray-300 rounded-full flex justify-center items-center">
             <SlBasket />
+            <span className="absolute bg-red-500 h-5 w-5 flex items-center justify-center text-xs text-white rounded-full -top-1 -right-2">
+              {cart.length}
+            </span>
           </button>
         </Link>
       </div>

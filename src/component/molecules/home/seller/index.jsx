@@ -1,9 +1,18 @@
 import useProducts from "../../../../hooks/useProducts";
+import useToken from "../../../../hooks/useToken";
 import {Button, Container} from "../../../atoms";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {addCartAction} from "../../../../store/actions/cart.action";
 
 function HomeSeller() {
+  const dispatch = useDispatch();
   const products = useProducts();
+  const token = useToken();
+
+  const hanldeCart = (id) => {
+    dispatch(addCartAction({token, id}));
+  };
 
   return (
     <Container className="mt-10">
@@ -11,7 +20,7 @@ function HomeSeller() {
         <span className="font-semibold">By Seller</span>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 justify-center mt-5 gap-5">
-        {products.map((item, i) => (
+        {products.slice(0, 8).map((item, i) => (
           <div
             key={i}
             className="p-2 rounded-lg hover:bg-gray-200 trans-300 group relative"
@@ -19,14 +28,17 @@ function HomeSeller() {
             <Link to={`/detail/${item.id}`}>
               <div className="h-60 overflow-hidden flex items-center">
                 <img
-                  // src={item.img}
-                  src="http://img.ltwebstatic.com/images3_pi/2022/09/19/16635517058ad77c184ddd26b1a059ca03ccd24089_thumbnail_405x552.jpg"
+                  src={item.img}
                   alt={item.product_name}
                   className="rounded-lg"
                 />
               </div>
               <div className="hidden group-hover:block trans-300 absolute inset-0">
-                <Button variant="primary" className="py-1 px-4">
+                <Button
+                  onClick={() => hanldeCart(item.id)}
+                  variant="primary"
+                  className="py-1 px-4"
+                >
                   + Add to cart
                 </Button>
               </div>
