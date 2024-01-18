@@ -2,6 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
 
+// GET USER BY TOKEN
 export const getUserByTokenAction = createAsyncThunk(
   "getUserByToken/getUser",
   async (token) => {
@@ -21,6 +22,8 @@ export const getUserByTokenAction = createAsyncThunk(
     }
   }
 );
+
+// REGISTER USER
 export const registerAction = createAsyncThunk(
   "registerAction/register",
   async (formData) => {
@@ -42,6 +45,7 @@ export const registerAction = createAsyncThunk(
   }
 );
 
+// LOGIN USER
 export const loginAction = createAsyncThunk(
   "loginAction/login",
   async ({formData, navigate}) => {
@@ -67,6 +71,7 @@ export const loginAction = createAsyncThunk(
   }
 );
 
+// LOGOUT USER
 export const logoutAction = createAsyncThunk(
   "lohoutAction/logout",
   async ({token, navigate}) => {
@@ -94,6 +99,7 @@ export const logoutAction = createAsyncThunk(
   }
 );
 
+// UPDATE USER
 export const updateUserAction = createAsyncThunk(
   "lohoutAction/logout",
   async ({token, formData, id}) => {

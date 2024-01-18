@@ -21,22 +21,49 @@ function DetailsProduct() {
   const [selectedComonent, setSelectedComonent] = useState("description");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [isSizeSelected, setIsSizeSelected] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   quantity: 1,
-  // });
+  const [quantity, setQuantity] = useState(1);
 
-  // const hanldeQuantityChange = (e) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
+  const [formData, setFormData] = useState({
+    quantity: quantity,
+    color: "",
+    size: "",
+  });
 
-  const handleColorChange = () => {
+  const hanldeAddQuantity = () => {
+    const result = quantity + 1;
+    setQuantity(result);
+
+    setFormData(() => ({
+      ...formData,
+      quantity: result,
+    }));
+  };
+
+  const hanldeMinQuantity = () => {
+    if (quantity > 1) {
+      const result = quantity - 1;
+      setQuantity(result);
+
+      setFormData(() => ({
+        ...formData,
+        quantity: result,
+      }));
+    }
+  };
+
+  const handleColorChange = (color) => {
+    setFormData(() => ({
+      ...formData,
+      color: color,
+    }));
     setIsColorSelected(true);
   };
 
-  const handleSizeChange = () => {
+  const handleSizeChange = (size) => {
+    setFormData(() => ({
+      ...formData,
+      size: size,
+    }));
     setIsSizeSelected(true);
   };
 
@@ -49,12 +76,13 @@ function DetailsProduct() {
   };
 
   const hanldeCart = (id) => {
-    dispatch(addCartAction({token, id, dispatch}));
+    dispatch(addCartAction({token, id, formData, dispatch}));
   };
-
   if (!selectedProduct) {
-    return console.log("");
+    return console.log(null);
   }
+
+  const newPrice = selectedProduct.price * quantity;
 
   return (
     <Container className="mt-10">
@@ -68,7 +96,7 @@ function DetailsProduct() {
               {selectedProduct.product_name}
             </h2>
             <span className="text-2xl font-bold">
-              IDR. {selectedProduct.price}
+              IDR. {newPrice.toFixed(3)}
             </span>
             <p className="text-gray-500 text-sm mt-5">
               {selectedProduct.short_description}
@@ -85,7 +113,7 @@ function DetailsProduct() {
                     id={`lang-${index}`}
                     name="lang"
                     value={color}
-                    onChange={handleColorChange}
+                    onChange={() => handleColorChange(color)}
                   />
                   <label
                     htmlFor={`lang-${index}`}
@@ -100,21 +128,21 @@ function DetailsProduct() {
           <div className="border-b-2 pb-5">
             <span className="text-gray-400">Choose Size</span>
             <form className="flex gap-4 mt-3">
-              {selectedProduct.sizes_item.map((color, index) => (
+              {selectedProduct.sizes_item.map((size, index) => (
                 <div key={index}>
                   <input
                     type="radio"
                     className="opacity-0 absolute radio"
                     id={`size-${index}`}
                     name="lang"
-                    value={color}
-                    onChange={handleSizeChange}
+                    value={size}
+                    onChange={() => handleSizeChange(size)}
                   />
                   <label
                     htmlFor={`size-${index}`}
                     className={`py-1 px-4 bg-gray-200 rounded-full text-sm cursor-pointer label-size-${index}`}
                   >
-                    {color}
+                    {size}
                   </label>
                 </div>
               ))}
@@ -125,11 +153,11 @@ function DetailsProduct() {
           </span>
           <div className="flex w-full gap-2">
             <div className="flex bg-gray-300 py-1 px-5 rounded-full">
-              <button className="px-4">
+              <button onClick={hanldeAddQuantity} className="px-4">
                 <BsPlus />
               </button>
-              <span className="text-xl">1</span>
-              <button className="px-4">
+              <span className="text-xl">{quantity}</span>
+              <button onClick={hanldeMinQuantity} className="px-4">
                 <HiMinus />
               </button>
             </div>

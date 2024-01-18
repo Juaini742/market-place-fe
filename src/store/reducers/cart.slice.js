@@ -8,7 +8,18 @@ const cartSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    increaseQuantiy: (state, action) => {
+      const {id} = action.payload;
+      const selectedItem = state.data.find((item) => item.id === id);
+      if (selectedItem) selectedItem.quantity++;
+    },
+    decreaseQuantiy: (state, action) => {
+      const {id} = action.payload;
+      const selectedItem = state.data.find((item) => item.id === id);
+      if (selectedItem && selectedItem.quantity > 0) selectedItem.quantity--;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCartAction.pending, (state) => {
@@ -25,4 +36,5 @@ const cartSlice = createSlice({
   },
 });
 
+export const {increaseQuantiy, decreaseQuantiy} = cartSlice.actions;
 export default cartSlice.reducer;

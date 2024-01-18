@@ -2,13 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getProductAction} from "../store/actions/product.action";
 
-function useProducts() {
+function useProducts({page = 1} = {}) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
 
   useEffect(() => {
-    dispatch(getProductAction());
-  }, [dispatch]);
+    dispatch(getProductAction({page}));
+  }, [dispatch, page]);
 
   return products;
 }

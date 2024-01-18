@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
+// GET BANK NAMES
 export const getBankAction = createAsyncThunk("getBank/bank", async () => {
   try {
     const response = await axios.get(

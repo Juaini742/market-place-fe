@@ -1,6 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import {notification} from "antd";
 
+// GET CART ITEMS BY USER ID
 export const getCartAction = createAsyncThunk(
   "getCart/cart",
   async ({token, id}) => {
@@ -21,21 +23,25 @@ export const getCartAction = createAsyncThunk(
   }
 );
 
+// ADD CART BY PRODUCT ID
 export const addCartAction = createAsyncThunk(
   "addCart/cart",
-  async ({token, id}, {dispatch}) => {
+  async ({token, id, formData}, {dispatch}) => {
     try {
       const response = await axios.post(
         `http://localhost:8080/api/secured/cart/${id}`,
-        {
-          quantity: 1,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      notification.success({
+        message: "Success",
+        description: "Product has added successfully",
+      });
 
       dispatch(getCartAction());
 
