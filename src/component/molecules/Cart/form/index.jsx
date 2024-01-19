@@ -1,13 +1,18 @@
+/* eslint-disable react/prop-types */
 import {useState} from "react";
 import {Button} from "../../../atoms";
 import CheckoutPage from "../../../pages/Checkout";
 
-function CartForm() {
+function CartForm(props) {
+  const {dataCheckSelected} = props;
   const [visibleCheckout, setVisibleCheckout] = useState(false);
 
   const handleVisibleCheckout = () => {
-    setVisibleCheckout(!visibleCheckout);
+    if (dataCheckSelected.length > 0) {
+      setVisibleCheckout(!visibleCheckout);
+    }
   };
+
   return (
     <div className="mt-5 border border-black flex flex-col justify-center p-3">
       <div className="flex justify-between">
@@ -41,13 +46,19 @@ function CartForm() {
         <Button
           onClick={handleVisibleCheckout}
           variant="primary"
-          className="py-3 px-3 text-sm w-full"
+          className={`py-3 px-3 text-sm w-full ${
+            dataCheckSelected.length > 0 ? "" : "cursor-not-allowed opacity-50"
+          }`}
+          disabled={dataCheckSelected.length === 0}
         >
           Proceed to Checkout
         </Button>
       </div>
       {visibleCheckout && (
-        <CheckoutPage handleVisibleCheckout={handleVisibleCheckout} />
+        <CheckoutPage
+          dataCheckSelected={dataCheckSelected}
+          handleVisibleCheckout={handleVisibleCheckout}
+        />
       )}
     </div>
   );

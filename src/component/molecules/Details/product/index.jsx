@@ -6,18 +6,18 @@ import {HiMinus} from "react-icons/hi";
 import DescriptionProduct from "./description";
 import RatingProduct from "./rating";
 import RecomendProduct from "./recomend";
-import useProducts from "../../../../hooks/useProducts";
 import {useDispatch} from "react-redux";
 import "./style.css";
+import {notification} from "antd";
 import {addCartAction} from "../../../../store/actions/cart.action";
 import useToken from "../../../../hooks/useToken";
+import useProductById from "../../../../hooks/useProductById";
 
 function DetailsProduct() {
   const {id} = useParams();
-  const products = useProducts();
   const dispatch = useDispatch();
+  const productById = useProductById({id});
   const token = useToken();
-  const selectedProduct = products && products.find((item) => item.id === id);
   const [selectedComonent, setSelectedComonent] = useState("description");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [isSizeSelected, setIsSizeSelected] = useState(false);
@@ -76,36 +76,43 @@ function DetailsProduct() {
   };
 
   const hanldeCart = (id) => {
+    if (!token) {
+      return notification.error({
+        message: "Error",
+        description: "Please Login before save product to your cart",
+      });
+    }
     dispatch(addCartAction({token, id, formData, dispatch}));
   };
-  if (!selectedProduct) {
+
+  if (!productById.colors_item) {
     return console.log(null);
   }
 
-  const newPrice = selectedProduct.price * quantity;
+  const newPrice = productById.price * quantity;
 
   return (
     <Container className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
         <div className="h-full md:h-[540px] lg:h-[700px] flex items-center overflow-hidden">
-          <img src={selectedProduct.img} alt={selectedProduct.product_name} />
+          <img src={productById.img} alt={productById.product_name} />
         </div>
         <div className="flex flex-col gap-3">
           <div className="border-b-2 pb-5">
             <h2 className="text-2xl font-bold mb-4">
-              {selectedProduct.product_name}
+              {productById.product_name}
             </h2>
             <span className="text-2xl font-bold">
               IDR. {newPrice.toFixed(3)}
             </span>
             <p className="text-gray-500 text-sm mt-5">
-              {selectedProduct.short_description}
+              {productById.short_description}
             </p>
           </div>
           <div className="border-b-2 pb-5">
             <span className="text-gray-400">Select Colors</span>
             <form className="flex gap-4 mt-3 flex-wrap">
-              {selectedProduct.colors_item.map((color, index) => (
+              {productById.colors_item.map((color, index) => (
                 <div key={index}>
                   <input
                     type="radio"
@@ -128,7 +135,7 @@ function DetailsProduct() {
           <div className="border-b-2 pb-5">
             <span className="text-gray-400">Choose Size</span>
             <form className="flex gap-4 mt-3">
-              {selectedProduct.sizes_item.map((size, index) => (
+              {productById.sizes_item.map((size, index) => (
                 <div key={index}>
                   <input
                     type="radio"
@@ -163,7 +170,7 @@ function DetailsProduct() {
             </div>
             <div className="w-full">
               <Button
-                onClick={() => hanldeCart(selectedProduct.id)}
+                onClick={() => hanldeCart(productById.id)}
                 variant="primary-rounded"
                 className={`py-2 w-full ${
                   isColorSelected && isSizeSelected
@@ -209,7 +216,7 @@ function DetailsProduct() {
         </div>
         <div className="mt-5">
           {selectedComonent === "description" && (
-            <DescriptionProduct selectedProduct={selectedProduct} />
+            <DescriptionProduct productById={productById} />
           )}
           {selectedComonent === "rating" && <RatingProduct />}
         </div>
@@ -217,7 +224,7 @@ function DetailsProduct() {
 
       <div className="mt-10">
         <h3 className="font-bold text-xl">Related Product</h3>
-        <RecomendProduct products={products} />
+        <RecomendProduct />
       </div>
     </Container>
   );

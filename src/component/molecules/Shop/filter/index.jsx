@@ -1,62 +1,68 @@
 /* eslint-disable react/prop-types */
 import {IoMdCloseCircle} from "react-icons/io";
 
-function ShopFilterProduct({visible, hanldeVisibleFilter}) {
+function ShopFilterProduct(props) {
+  const {visible, hanldeVisibleFilter, sortOptions, handleSort} = props;
   return (
     <div
-      className={` md:flex fixed md:static z-30 bg-black/30 md:bg-transparent backdrop-blur-md left-0 right-0 top-0 bottom-0 px-10 md:px-0 flex-col ${
+      className={` md:flex fixed md:static z-30 bg-white left-0 right-0 top-0 bottom-0 px-10 md:px-0 flex-col ${
         visible ? "flex" : "hidden"
       }`}
     >
       <div className="mt-10 flex flex-col gap-3 border-b-2 pb-5">
-        <h3 className="font-bold">Products Categories</h3>
+        <h3 className="font-bold">Products Filters</h3>
         <div className="font-bold block md:hidden absolute top-5 right-5">
           <button onClick={hanldeVisibleFilter} className="text-xl">
             <IoMdCloseCircle />
           </button>
         </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="men" className="w-4 h-4" />
-          <label htmlFor="men" className="text-sm">
-            Men
+        <div className="flex flex-col gap-3">
+          <label className="text-sm flex items-center gap-1">
+            <input
+              type="checkbox"
+              checked={sortOptions.sortBySold}
+              onChange={() => handleSort("sortBySold")}
+              className="w-4 h-4"
+            />
+            Popular
+          </label>
+          <label className="text-sm flex items-center gap-1">
+            <input
+              type="checkbox"
+              checked={sortOptions.sortByPrice}
+              onChange={() => handleSort("sortByPrice")}
+              className="w-4 h-4"
+            />
+            High Price
+          </label>
+          <label className="text-sm flex items-center gap-1">
+            <input
+              type="checkbox"
+              checked={sortOptions.sortByLowestPrice}
+              onChange={() => handleSort("sortByLowestPrice")}
+              className="w-4 h-4"
+            />
+            Low Price
           </label>
         </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="woman" className="w-4 h-4" />
-          <label htmlFor="woman" className="text-sm">
-            Woman
-          </label>
-        </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="kids" className="w-4 h-4" />
-          <label htmlFor="kids" className="text-sm">
-            Kids
-          </label>
-        </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="bags" className="w-4 h-4" />
-          <label htmlFor="bags" className="text-sm">
-            Bags
-          </label>
-        </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="belts" className="w-4 h-4" />
-          <label htmlFor="belts" className="text-sm">
-            Belts
-          </label>
-        </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="wallets" className="w-4 h-4" />
-          <label htmlFor="wallets" className="text-sm">
-            Wallets
-          </label>
-        </div>
-        <div className="flex gap-3 items-center">
-          <input type="checkbox" id="watches" className="w-4 h-4" />
-          <label htmlFor="watches" className="text-sm">
-            Watches
-          </label>
-        </div>
+        <label className="text-sm flex items-center gap-1">
+          <input
+            type="checkbox"
+            checked={sortOptions.sortOrder === "ascending"}
+            onChange={() => handleSort("sortOrder", "ascending")}
+            className="w-4 h-4"
+          />
+          Ascending A-Z
+        </label>
+        <label className="text-sm flex items-center gap-1">
+          <input
+            type="checkbox"
+            checked={sortOptions.sortOrder === "descending"}
+            onChange={() => handleSort("sortOrder", "descending")}
+            className="w-4 h-4"
+          />
+          Descending Z-A
+        </label>
       </div>
 
       <div className="mt-10 flex flex-col gap-3 border-b-2 pb-5">

@@ -7,10 +7,27 @@ import ShopProductList from "../molecules/Shop/product list";
 
 function ShopPage() {
   const [visible, setVisible] = useState(false);
+  const [sortOptions, setSortOptions] = useState({
+    sortBySold: false,
+    sortByPrice: false,
+    sortByLowestPrice: false,
+    sortOrder: "",
+  });
 
   const hanldeVisibleFilter = () => {
     setVisible(!visible);
   };
+
+  const handleSort = (type, order) => {
+    setSortOptions((prevOptions) => ({
+      sortBySold: type === "sortBySold" ? !prevOptions.sortBySold : false,
+      sortByPrice: type === "sortByPrice" ? !prevOptions.sortByPrice : false,
+      sortByLowestPrice:
+        type === "sortByLowestPrice" ? !prevOptions.sortByLowestPrice : false,
+      sortOrder: type === "sortOrder" ? order : "",
+    }));
+  };
+
   return (
     <>
       <Navbar />
@@ -18,15 +35,19 @@ function ShopPage() {
         <ShopFilterProduct
           visible={visible}
           hanldeVisibleFilter={hanldeVisibleFilter}
+          sortOptions={sortOptions}
+          handleSort={handleSort}
         />
         <div className="font-bold block md:hidden">
           <button onClick={hanldeVisibleFilter} className="border-b-2">
             Filter Products
           </button>
         </div>
-        <ShopProductList />
+        <ShopProductList sortOptions={sortOptions} />
       </Container>
-      <Footer />
+      <div className="absolute right-0 left-0">
+        <Footer />
+      </div>
     </>
   );
 }

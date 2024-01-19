@@ -7,6 +7,7 @@ import {Container} from "../atoms";
 import {Collapse} from "antd";
 import {useState} from "react";
 import useAuth from "../../hooks/useAuth";
+import EmptyPage from "./Empty";
 
 function ProfilePage() {
   const {users, token} = useAuth();
@@ -51,6 +52,10 @@ function ProfilePage() {
       children: <HistoryProfile />,
     },
   ];
+
+  if (!token) {
+    return <EmptyPage />;
+  }
 
   return (
     <>

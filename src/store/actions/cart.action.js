@@ -51,3 +51,53 @@ export const addCartAction = createAsyncThunk(
     }
   }
 );
+
+export const updateCartAction = createAsyncThunk(
+  "deleteCart/cart",
+  async ({token, id, quantity}, {dispatch}) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/secured/updateCart/${id}`,
+        {quantity},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(getCartAction());
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  }
+);
+
+export const deleteCartAction = createAsyncThunk(
+  "deleteCart/cart",
+  async ({token, id}, {dispatch}) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/api/secured/deleteCart/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      notification.success({
+        message: "Success",
+        description: "Product has deleted successfully",
+      });
+
+      dispatch(getCartAction());
+
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  }
+);

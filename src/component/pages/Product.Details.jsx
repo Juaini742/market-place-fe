@@ -7,7 +7,9 @@ function ProductDetailsPage() {
     <>
       <Navbar />
       <DetailsProduct />
+      {/* <div className="absolute bottom-0 right-0 left-0"> */}
       <Footer />
+      {/* </div> */}
     </>
   );
 }

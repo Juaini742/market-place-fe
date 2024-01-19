@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import {Link} from "react-router-dom";
 import {Button} from "../../../atoms";
+import useProducts from "../../../../hooks/useProducts";
 
-function RecomendProduct({products}) {
+function RecomendProduct() {
+  const products = useProducts();
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 justify-center mt-5 gap-5">
       {products.slice(10, 14).map((item, i) => (

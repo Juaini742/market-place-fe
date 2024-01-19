@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
 import useBanks from "../../hooks/useBanks";
-import useProducts from "../../hooks/useProducts";
 import {Button, Container} from "../atoms";
 import {Select} from "antd";
 
-function CheckoutPage({handleVisibleCheckout}) {
-  const product = useProducts();
+function CheckoutPage(props) {
+  const {dataCheckSelected, handleVisibleCheckout} = props;
   const banks = useBanks();
+
+  const totalShippingAmount = dataCheckSelected
+    .reduce((acc, item) => acc + item.product_id.price * item.quantity, 0)
+    .toFixed(3);
 
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-white overflow-auto pb-20 md:pb-0">
@@ -14,22 +18,28 @@ function CheckoutPage({handleVisibleCheckout}) {
           <span>Delivery and payment</span>
           <div className="flex justify-between flex-col-reverse md:flex-row">
             <div className="">
-              {product.slice(4, 6).map((item) => (
-                <div key={product.id} className="flex flex-col">
+              {dataCheckSelected.map((item, i) => (
+                <div key={i} className="flex flex-col">
                   <div className="flex items-center gap-3">
                     <div className="mt-3 flex gap-2">
                       <div className="w-16 overflow-hidden flex items-center">
-                        <img src={item.img} alt={item.product_name} />
+                        <img
+                          src={item.product_id.img}
+                          alt={item.product_id.product_name}
+                        />
                       </div>
                       <div className="flex flex-col w-full md:w-72">
                         <label className="font-bold text-xs">
-                          {item.product_name}
+                          {item.product_id.product_name}
                         </label>
-                        <span className="text-xs">Size: S</span>
-                        <span className="text-xs">color: red</span>
-                        <span className="text-xs">Quanity: 1</span>
+                        <span className="text-xs">Size: {item.size}</span>
+                        <span className="text-xs">color: {item.color}</span>
                         <span className="text-xs">
-                          Price: IDR. {item.price}
+                          Quanity: {item.quantity}
+                        </span>
+                        <span className="text-xs">
+                          Price: IDR.{" "}
+                          {(item.product_id.price * item.quantity).toFixed(3)}
                         </span>
                       </div>
                     </div>
@@ -41,8 +51,9 @@ function CheckoutPage({handleVisibleCheckout}) {
               <div className="flex flex-col gap-3">
                 <span>Subtotal</span>
                 <div className="text-sm flex flex-col">
-                  <span>Total items (1 item)</span>
-                  <span>Total Shipping Cost (IDR. 76.000)</span>
+                  <span>Total ({dataCheckSelected.length} item)</span>
+
+                  <span>Total Shipping Cost (IDR. {totalShippingAmount})</span>
                   <span>Shipping Insurance (IDR. 0)</span>
                 </div>
                 <div className="text-sm mb-2">
@@ -90,7 +101,7 @@ function CheckoutPage({handleVisibleCheckout}) {
             </div>
             <div className="mt-2 flex flex-col gap-2 w-full">
               <span>Bank</span>
-              <Select className="w-full" defaultValue="y">
+              <Select className="w-full" placeholder="Select your bank">
                 {banks.map((item, index) => (
                   <Select.Option key={index}>{item.name}</Select.Option>
                 ))}

@@ -1,14 +1,44 @@
+/* eslint-disable react/prop-types */
 import {Link} from "react-router-dom";
 import {Button} from "../../../atoms";
 import useProducts from "../../../../hooks/useProducts";
 import {useState} from "react";
 import useTotalPage from "../../../../hooks/useTotalPage";
 
-function ShopProductList() {
+function ShopProductList(props) {
+  const {sortOptions} = props;
   const [currentPage, setCurrentPage] = useState(1);
-  const products = useProducts({page: currentPage});
-  const itemsPerPage = 12;
-  const total = useTotalPage(itemsPerPage);
+  // const [sortBySold, setSortBySold] = useState(false);
+  // const [sortByPrice, setSortByPrice] = useState(false);
+  // const [sortByLowestPrice, setSortByLowestPrice] = useState(false);
+  // const [sortOrder, setSortOrder] = useState("");
+  // const products = useProducts({
+  //   page: currentPage,
+  //   sortBySold,
+  //   sortByPrice,
+  //   sortByLowestPrice,
+  //   sortOrder,
+  // });
+  const total = useTotalPage();
+
+  // const hanldeSortBySold = () => {
+  //   setSortBySold((prev) => !prev);
+  // };
+  // const hanldeSortByPrice = () => {
+  //   setSortByPrice((prev) => !prev);
+  // };
+  // const hanldeSortByLowestPrice = () => {
+  //   setSortByLowestPrice((prev) => !prev);
+  // };
+
+  // const hanldeSortOrder = (order) => {
+  //   setSortOrder(order);
+  // };
+
+  const products = useProducts({
+    page: currentPage,
+    ...sortOptions,
+  });
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => (prevPage < total ? prevPage + 1 : prevPage));
@@ -20,6 +50,72 @@ function ShopProductList() {
 
   return (
     <div>
+      {/* <div className="flex gap-3">
+        <Button variant="primary" onClick={hanldeSortBySold} className="px-3">
+          sold
+        </Button>
+        <Button variant="primary" onClick={hanldeSortByPrice} className="px-3">
+          Hight Price
+        </Button>
+        <Button
+          variant="primary"
+          onClick={hanldeSortByLowestPrice}
+          className="px-3"
+        >
+          Low Price
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => hanldeSortOrder("ascending")}
+          className="px-3"
+        >
+          Ascending A-Z
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => hanldeSortOrder("descending")}
+          className="px-3"
+        >
+          Descending Z-A
+        </Button>
+      </div> */}
+      {/* <div className="flex gap-3">
+        <Button
+          variant="primary"
+          onClick={() => handleSort("sortBySold")}
+          className="px-3"
+        >
+          sold
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => handleSort("sortByPrice")}
+          className="px-3"
+        >
+          High Price
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => handleSort("sortByLowestPrice")}
+          className="px-3"
+        >
+          Low Price
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => handleSort("sortOrder", "ascending")}
+          className="px-3"
+        >
+          Ascending A-Z
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => handleSort("sortOrder", "descending")}
+          className="px-3"
+        >
+          Descending Z-A
+        </Button>
+      </div> */}
       <div className="grid grid-cols-2 md:grid-cols-4 justify-center gap-5">
         {products.map((item, i) => (
           <div

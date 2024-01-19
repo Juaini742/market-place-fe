@@ -7,11 +7,18 @@ function useCart() {
   const dispatch = useDispatch();
   const {users, token} = useAuth();
   const cart = useSelector((state) => state.cart.data);
-  const id = users.id;
+
+  const id = users?.id;
 
   useEffect(() => {
-    dispatch(getCartAction({id, token}));
+    if (token && id) {
+      dispatch(getCartAction({id, token}));
+    }
   }, [dispatch, id, token]);
+
+  if (!token || !users) {
+    return null;
+  }
 
   return cart;
 }

@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-black py-10 md:h-72 mt-10 flex items-center">
+    <footer className=" bg-black py-10 md:h-72 mt-10 flex items-center">
       <div className="container text-white grid grid-cols-1 md:grid-cols-4 justify-between font-juro gap-5">
         <div className="">
           <h6 className="font-bold">Exclusive</h6>

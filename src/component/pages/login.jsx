@@ -35,7 +35,7 @@ function LoginPage() {
         <div className="hidden md:flex w-96 overflow-hidden">
           <img src="../img/login.svg" alt="login" className="" />
         </div>
-        <div className="box-border md:w-1/2">
+        <div className="box-border w-full md:w-1/2">
           <form onSubmit={hanldeSubmit}>
             <div className="">
               <h1 className="text-2xl font-semibold">Welcome to Myfashion</h1>

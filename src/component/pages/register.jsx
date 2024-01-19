@@ -32,7 +32,7 @@ function RegisterPage() {
           <img src="../img/login.svg" alt="login" />
         </div>
 
-        <div className="box-border md:w-1/2">
+        <div className="box-border w-full md:w-1/2">
           <form onSubmit={handleSubmit}>
             <div>
               <h1 className="text-2xl font-semibold">Create New Account</h1>

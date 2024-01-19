@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux";
 
-const useTotalPage = (itemsPerPage) => {
+const useTotalPage = () => {
   const totalProducts = useSelector((state) => state.products.total);
 
-  const totalPage = Math.ceil(totalProducts / itemsPerPage);
+  const totalPage = Math.ceil(totalProducts / 12);
 
   return totalPage;
 };
