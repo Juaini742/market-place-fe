@@ -7,7 +7,7 @@ function RecomendProduct() {
   const products = useProducts();
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 justify-center mt-5 gap-5">
-      {products.slice(10, 14).map((item, i) => (
+      {products.slice(1, 5).map((item, i) => (
         <div
           key={i}
           className="p-2 rounded-lg hover:bg-gray-200 trans-300 group relative"

@@ -6,6 +6,10 @@ import CheckoutPage from "../../../pages/Checkout";
 function CartForm(props) {
   const {dataCheckSelected} = props;
   const [visibleCheckout, setVisibleCheckout] = useState(false);
+  const totalPrice = dataCheckSelected.reduce(
+    (total, item) => total + item.product_id.price * item.quantity,
+    0
+  );
 
   const handleVisibleCheckout = () => {
     if (dataCheckSelected.length > 0) {
@@ -17,7 +21,7 @@ function CartForm(props) {
     <div className="mt-5 border border-black flex flex-col justify-center p-3">
       <div className="flex justify-between">
         <span>Subtotal</span>
-        <span>IDR. 2000.00</span>
+        <span>IDR. {totalPrice.toFixed(3)}</span>
       </div>
       <div className="mt-3">
         <span className="text-xs">Enter Discount Code</span>
@@ -40,7 +44,7 @@ function CartForm(props) {
       </div>
       <div className="my-5 flex justify-between">
         <span className="font-bold text-sm">Grand Total</span>
-        <span className="font-bold text-sm">IDR. 205.000</span>
+        <span className="font-bold text-sm">IDR. {totalPrice.toFixed(3)}</span>
       </div>
       <div className="w-full">
         <Button
@@ -57,6 +61,7 @@ function CartForm(props) {
       {visibleCheckout && (
         <CheckoutPage
           dataCheckSelected={dataCheckSelected}
+          totalPrice={totalPrice}
           handleVisibleCheckout={handleVisibleCheckout}
         />
       )}

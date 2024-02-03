@@ -7,20 +7,19 @@ function useCart() {
   const dispatch = useDispatch();
   const {users, token} = useAuth();
   const cart = useSelector((state) => state.cart.data);
-
-  const id = users?.id;
+  const userId = users?.id;
 
   useEffect(() => {
-    if (token && id) {
-      dispatch(getCartAction({id, token}));
+    if (token && userId) {
+      dispatch(getCartAction({id: userId, token}));
     }
-  }, [dispatch, id, token]);
+  }, [dispatch, userId, token]);
 
   if (!token || !users) {
     return null;
   }
 
-  return cart;
+  return token ? {cart, userId, dispatch} : dispatch;
 }
 
 export default useCart;

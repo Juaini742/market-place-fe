@@ -14,6 +14,7 @@ function BiodataCategory(props) {
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
+      file: users?.avatar || "",
       username: users?.username || "",
       name: users?.name || "",
       email: users?.email || "",
@@ -71,6 +72,7 @@ function BiodataCategory(props) {
           value={formData.username}
           onChange={hanldeChange}
           className="border h-10 border-black rounded-md w-full pl-3"
+          required
         />
       </div>
       <div className="mt-5">
@@ -97,6 +99,7 @@ function BiodataCategory(props) {
           value={formData.email}
           onChange={hanldeChange}
           className="border h-10 border-black rounded-md w-full pl-3"
+          required
         />
       </div>
       <div className="mt-5">

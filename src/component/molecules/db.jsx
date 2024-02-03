@@ -63,3 +63,64 @@ export const sponsors = [
     img: "../img/sponsor12.jpg",
   },
 ];
+
+export const colors = [
+  {
+    label: "Black",
+    value: "black",
+    desc: "Black",
+  },
+  {
+    label: "White",
+    value: "white",
+    desc: "White",
+  },
+  {
+    label: "Red",
+    value: "red",
+    desc: "Red",
+  },
+  {
+    label: "Blue",
+    value: "blue",
+    desc: "Blue",
+  },
+  {
+    label: "Green",
+    value: "green",
+    desc: "Green",
+  },
+  {
+    label: "Yellow",
+    value: "yellow",
+    desc: "Yellow",
+  },
+  {
+    label: "Pink",
+    value: "pink",
+    desc: "Pink",
+  },
+];
+
+export const sizes = [
+  {
+    label: "Small",
+    value: "small",
+    desc: "Small",
+  },
+  {
+    label: "Medium",
+    value: "medium",
+    desc: "Medium",
+  },
+  {
+    label: "Large",
+    value: "large",
+    desc: "Large",
+  },
+  {
+    label: "X-Large",
+    value: "x-large",
+    desc: "X-large",
+  },
+];

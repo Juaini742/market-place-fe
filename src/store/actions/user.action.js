@@ -1,20 +1,18 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
+import {backendUrl} from "../../contants";
 
 // GET USER BY TOKEN
 export const getUserByTokenAction = createAsyncThunk(
   "getUserByToken/getUser",
   async (token) => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/getUserByToken",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${backendUrl}/api/getUserByToken`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return response.data;
     } catch (error) {
@@ -28,10 +26,7 @@ export const registerAction = createAsyncThunk(
   "registerAction/register",
   async (formData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/register",
-        formData
-      );
+      const response = await axios.post(`${backendUrl}/api/register`, formData);
 
       notification.success({
         message: "Success",
@@ -50,13 +45,9 @@ export const loginAction = createAsyncThunk(
   "loginAction/login",
   async ({formData, navigate}) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/login",
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${backendUrl}/api/login`, formData, {
+        withCredentials: true,
+      });
 
       const data = response.data;
 
@@ -76,15 +67,11 @@ export const logoutAction = createAsyncThunk(
   "lohoutAction/logout",
   async ({token, navigate}) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/logout",
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${backendUrl}/api/logout`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = response.data;
 
@@ -105,7 +92,7 @@ export const updateUserAction = createAsyncThunk(
   async ({token, formData, id}) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/updateUser/${id}`,
+        `${backendUrl}/api/updateUser/${id}`,
         formData,
         {
           headers: {

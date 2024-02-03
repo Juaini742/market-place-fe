@@ -5,12 +5,13 @@ import {getProductByIdAction} from "../store/actions/product.action";
 function useProductById({id}) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.dataOne);
+  const status = useSelector((state) => state.products.status === "pending");
 
   useEffect(() => {
     dispatch(getProductByIdAction(id));
   }, [dispatch, id]);
 
-  return products;
+  return {products, status};
 }
 
 export default useProductById;

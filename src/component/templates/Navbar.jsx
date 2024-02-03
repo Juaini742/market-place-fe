@@ -1,19 +1,17 @@
 import {SlBasket} from "react-icons/sl";
 import {Link, useNavigate} from "react-router-dom";
 import {Button} from "../atoms";
-import {useDispatch} from "react-redux";
 import useToken from "../../hooks/useToken";
 import {logoutAction} from "../../store/actions/user.action";
-import useCart from "../../hooks/useCart";
 import {getProductAction} from "../../store/actions/product.action";
 import {useState} from "react";
 import {CiSearch} from "react-icons/ci";
+import useCart from "../../hooks/useCart";
 
 function Navbar() {
-  const dispatch = useDispatch();
+  const {cart, dispatch} = useCart();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const cart = useCart();
   const token = useToken();
 
   const hanldeLogout = () => {
@@ -24,10 +22,6 @@ function Navbar() {
     e.preventDefault();
     dispatch(getProductAction({keyword: search}));
   };
-
-  // if (!cart) {
-  //   return console.log(null);
-  // }
 
   return (
     <nav className="bg-white border-b-2">
@@ -81,7 +75,7 @@ function Navbar() {
             <SlBasket />
             {!token ? null : (
               <span className="absolute bg-red-500 h-5 w-5 flex items-center justify-center text-xs text-white rounded-full -top-1 -right-2">
-                {cart.length}
+                {cart?.length}
               </span>
             )}
           </button>

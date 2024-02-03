@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
+import {backendUrl} from "../../contants";
 
 // GET CART ITEMS BY USER ID
 export const getCartAction = createAsyncThunk(
@@ -8,7 +9,7 @@ export const getCartAction = createAsyncThunk(
   async ({token, id}) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/secured/cartsUser/${id}`,
+        `${backendUrl}/api/secured/cartsUser/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -29,7 +30,7 @@ export const addCartAction = createAsyncThunk(
   async ({token, id, formData}, {dispatch}) => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/secured/cart/${id}`,
+        `${backendUrl}/api/secured/cart/${id}`,
         formData,
         {
           headers: {
@@ -57,7 +58,7 @@ export const updateCartAction = createAsyncThunk(
   async ({token, id, quantity}, {dispatch}) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/secured/updateCart/${id}`,
+        `${backendUrl}/api/secured/updateCart/${id}`,
         {quantity},
         {
           headers: {
@@ -80,7 +81,7 @@ export const deleteCartAction = createAsyncThunk(
   async ({token, id}, {dispatch}) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/api/secured/deleteCart/${id}`,
+        `${backendUrl}/api/secured/deleteCart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

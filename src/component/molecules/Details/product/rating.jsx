@@ -1,52 +1,46 @@
-import {FaStar} from "react-icons/fa";
+/* eslint-disable react/prop-types */
+import useCommentProductId from "../../../../hooks/useCommentProductId";
+import {Rate} from "antd";
 
-function RatingProduct() {
+function RatingProduct({id}) {
+  const comments = useCommentProductId(id);
+
   return (
-    <div className="flex flex-col gap-5">
-      <h3 className="font-bold text-xl">Rating (30)</h3>
-      <div className="flex flex-col gap-3 py-5 px-4 border rounded-xl">
-        <span className="text-gray-400">Posted on August 14, 2024</span>
-        <div className="flex gap-1 text-yellow-500">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-        </div>
-        <h4>Samantha D</h4>
-        <p className="text-gray-400">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure animi
-          sit natus pariatur doloremque voluptatibus perferendis aliquid quia.
-        </p>
-      </div>
-      <div className="flex flex-col gap-3 py-5 px-4 border rounded-xl">
-        <span className="text-gray-400">Posted on August 14, 2024</span>
-        <div className="flex gap-1 text-yellow-500">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-        </div>
-        <h4>Samantha D</h4>
-        <p className="text-gray-400">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure animi
-          sit natus pariatur doloremque voluptatibus perferendis aliquid quia.
-        </p>
-      </div>
-      <div className="flex flex-col gap-3 py-5 px-4 border rounded-xl">
-        <span className="text-gray-400">Posted on August 14, 2024</span>
-        <div className="flex gap-1 text-yellow-500">
-          <FaStar />
-          <FaStar />
-          <FaStar />
-          <FaStar />
-        </div>
-        <h4>Samantha D</h4>
-        <p className="text-gray-400">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure animi
-          sit natus pariatur doloremque voluptatibus perferendis aliquid quia.
-        </p>
-      </div>
-    </div>
+    <>
+      {comments.length > 0 ? (
+        comments.map((item) => (
+          <div
+            key={item.id}
+            className="flex flex-col gap-3 py-5 px-4 border rounded-xl mb-2"
+          >
+            <>
+              <span className="text-gray-400">
+                Posted on{" "}
+                {new Date(item.createdAt).toLocaleString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+              <div className="flex gap-1 text-yellow-500">
+                <Rate disabled defaultValue={item.rating} />
+              </div>
+              <div className="flex items-center gap-2">
+                <img
+                  src={item.user_id.avatar}
+                  alt={item.user_id.name}
+                  className="w-9 rounded-full"
+                />
+                <h4 className="font-bold">{item.user_id.name}</h4>
+              </div>
+              <p className="text-gray-400">{item.message}</p>
+            </>
+          </div>
+        ))
+      ) : (
+        <p className="text-center text-slate-400 my-10">Noting Comments</p>
+      )}
+    </>
   );
 }
 
