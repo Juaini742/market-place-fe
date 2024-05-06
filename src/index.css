@@ -10,6 +10,10 @@ body {
   @apply w-[90%] mx-auto;
 }
 
+.active {
+  @apply font-bold;
+}
+
 .btn-primary {
   @apply bg-black text-white rounded-lg hover:bg-gray-900 hover:transition duration-300;
 }

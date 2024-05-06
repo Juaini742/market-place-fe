@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
-import {backendUrl} from "../../contants";
+import { backendUrl } from "../../constants";
 
 // GET ALL PRODUCTS
 export const getProductAction = createAsyncThunk(
@@ -48,14 +48,12 @@ export const getProductByIdAction = createAsyncThunk(
 
 export const getProductByUserIdAction = createAsyncThunk(
   "getProductByUserId/product",
-  async ({id, token}) => {
+  async () => {
     try {
       const response = await axios.get(
-        `${backendUrl}/api/secured/productUser/${id}`,
+        `${backendUrl}/api/secured/productUser`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 
@@ -70,16 +68,13 @@ export const getProductByUserIdAction = createAsyncThunk(
 
 export const addproductAction = createAsyncThunk(
   "getProductById/product",
-  async ({token, formData}) => {
+  async ({formData}) => {
     try {
       const response = await axios.post(
         `${backendUrl}/api/secured/addProduct`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
+          withCredentials: true,
         }
       );
 
@@ -128,14 +123,12 @@ export const updateproductAction = createAsyncThunk(
 
 export const deleteProductByIdAction = createAsyncThunk(
   "deleteProductById/product",
-  async ({id, token}, {dispatch}) => {
+  async ({id}, {dispatch}) => {
     try {
       const response = await axios.delete(
         `${backendUrl}/api/secured/delete/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 

@@ -1,19 +1,17 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
-import {backendUrl} from "../../contants";
+import { backendUrl } from "../../constants";
 
 // GET CART ITEMS BY USER ID
 export const getCommentByUserIdAction = createAsyncThunk(
   "getCommentByUserId/comment",
-  async ({token, id}) => {
+  async () => {
     try {
       const response = await axios.get(
-        `${backendUrl}/api/secured/getCommentUser/${id}`,
+        `${backendUrl}/api/secured/getCommentUser`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
       const data = response.data;
@@ -27,14 +25,12 @@ export const getCommentByUserIdAction = createAsyncThunk(
 // GET CART ITEMS BY USER ID
 export const getCommentByIdAction = createAsyncThunk(
   "getCommentById/comment",
-  async ({token, id}) => {
+  async (id) => {
     try {
       const response = await axios.get(
         `${backendUrl}/api/secured/getOneComment/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
       const data = response.data;
@@ -49,14 +45,12 @@ export const getCommentByIdAction = createAsyncThunk(
 // GET CART ITEMS BY USER ID
 export const getCommentByProductIdAction = createAsyncThunk(
   "getCommentByProductId/comments",
-  async ({token, id}) => {
+  async (id) => {
     try {
       const response = await axios.get(
-        `${backendUrl}/api/secured/getCommentProductId/${id}`,
+        `${backendUrl}/api/public/getCommentProductId/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
       const data = response.data;

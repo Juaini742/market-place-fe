@@ -1,18 +1,24 @@
 import {useDispatch, useSelector} from "react-redux";
-import useToken from "./useToken";
 import {useEffect} from "react";
 import {getUserByTokenAction} from "../store/actions/user.action";
 
 function useAuth() {
   const dispatch = useDispatch();
-  const token = useToken();
   const users = useSelector((state) => state.user.data);
+  const status = useSelector((state) => state.user.status);
 
   useEffect(() => {
-    dispatch(getUserByTokenAction(token));
-  }, [dispatch, token]);
+    if (status === "idle") {
+      dispatch(getUserByTokenAction());
+    }
+  }, [status, dispatch]);
 
-  return {users, token};
+  if (status === "loading" || !users) {
+    console.log("Loading...");
+    return null; // Kembalikan null jika masih loading
+  }
+
+  return users;
 }
 
 export default useAuth;

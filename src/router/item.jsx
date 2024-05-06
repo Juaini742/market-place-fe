@@ -1,13 +1,13 @@
-import HistoryUpdateComments from "../component/molecules/profile/history/comments/update";
-import CartPage from "../component/pages/Cart";
-import HomePage from "../component/pages/Home";
-import MyproductDetailPage from "../component/pages/Myproduct.Detail";
-import ProductDetailsPage from "../component/pages/Product.Details";
-import ProfilePage from "../component/pages/Profile";
-import ShopPage from "../component/pages/Shop";
-import UpdateProductPage from "../component/pages/Update.product";
-import LoginPage from "../component/pages/login";
-import RegisterPage from "../component/pages/register";
+import HistoryUpdateComments from "../components/molecules/profile/history/comments/update";
+import CartPage from "../components/pages/Cart";
+import HomePage from "../components/pages/Home";
+import MyproductDetailPage from "../components/pages/Myproduct.Detail";
+import ProductDetailsPage from "../components/pages/Product.Details";
+import ProfilePage from "../components/pages/Profile";
+import ShopPage from "../components/pages/Shop";
+import UpdateProductPage from "../components/pages/Update.product";
+import LoginPage from "../components/pages/login";
+import RegisterPage from "../components/pages/register";
 
 export const rootItem = [
   {

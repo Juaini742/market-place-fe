@@ -12,19 +12,25 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserByTokenAction.pending, (state) => {
-        state.status = "Loading";
+        state.status = "loading";
       })
       .addCase(loginAction.rejected, (state, action) => {
-        (state.data = null), (state.error = action.payload);
+        state.data = null;
+        state.error = action.payload;
       })
       .addCase(getUserByTokenAction.rejected, (state, action) => {
-        (state.data = null), (state.error = action.payload);
+        state.status = "rejected";
+        state.error = action.payload;
+        state.data = null;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
-        (state.data = action.payload), (state.error = null);
+        state.data = action.payload;
+        state.error = null;
       })
       .addCase(getUserByTokenAction.fulfilled, (state, action) => {
-        (state.data = action.payload.user), (state.error = null);
+        state.status = "success";
+        state.data = action.payload.dataUser;
+        state.error = null;
       });
   },
 });

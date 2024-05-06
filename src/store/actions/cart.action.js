@@ -1,41 +1,31 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
-import {backendUrl} from "../../contants";
+import { backendUrl } from "../../constants";
 
 // GET CART ITEMS BY USER ID
-export const getCartAction = createAsyncThunk(
-  "getCart/cart",
-  async ({token, id}) => {
-    try {
-      const response = await axios.get(
-        `${backendUrl}/api/secured/cartsUser/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = response.data;
-      return data;
-    } catch (error) {
-      throw new Error(error.response.data.message);
-    }
+export const getCartAction = createAsyncThunk("getCart/cart", async () => {
+  try {
+    const response = await axios.get(`${backendUrl}/api/secured/cartsUser`, {
+      withCredentials: true,
+    });
+    const data = response.data;
+    return data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
   }
-);
+});
 
 // ADD CART BY PRODUCT ID
 export const addCartAction = createAsyncThunk(
   "addCart/cart",
-  async ({token, id, formData}, {dispatch}) => {
+  async ({id, formData}, {dispatch}) => {
     try {
       const response = await axios.post(
         `${backendUrl}/api/secured/cart/${id}`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 
@@ -48,6 +38,10 @@ export const addCartAction = createAsyncThunk(
 
       return response.data;
     } catch (error) {
+      notification.error({
+        message: "Errors",
+        description: "This product has already been saved",
+      });
       throw new Error(error.response.data.message);
     }
   }
@@ -55,15 +49,13 @@ export const addCartAction = createAsyncThunk(
 
 export const updateCartAction = createAsyncThunk(
   "deleteCart/cart",
-  async ({token, id, quantity}, {dispatch}) => {
+  async ({id, quantity}, {dispatch}) => {
     try {
       const response = await axios.put(
         `${backendUrl}/api/secured/updateCart/${id}`,
         {quantity},
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 
@@ -78,14 +70,12 @@ export const updateCartAction = createAsyncThunk(
 
 export const deleteCartAction = createAsyncThunk(
   "deleteCart/cart",
-  async ({token, id}, {dispatch}) => {
+  async ({id}, {dispatch}) => {
     try {
       const response = await axios.delete(
         `${backendUrl}/api/secured/deleteCart/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 

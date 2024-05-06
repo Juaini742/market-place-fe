@@ -1,19 +1,14 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import {backendUrl} from "../../contants";
+import { backendUrl } from "../../constants";
 
 export const getShipping = createAsyncThunk(
   "postShipping/shipping",
-  async ({id, token}) => {
+  async () => {
     try {
-      const response = await axios.get(
-        `${backendUrl}/api/secured/shipping/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${backendUrl}/api/secured/shipping`, {
+        withCredentials: true,
+      });
 
       const data = response.data;
 
@@ -25,15 +20,13 @@ export const getShipping = createAsyncThunk(
 );
 export const postShipping = createAsyncThunk(
   "postShipping/shipping",
-  async ({id, token, formData}) => {
+  async ({id, formData}) => {
     try {
       const response = await axios.post(
         `${backendUrl}/api/secured/shipping/${id}`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 

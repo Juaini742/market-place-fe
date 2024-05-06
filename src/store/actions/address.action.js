@@ -1,29 +1,24 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {notification} from "antd";
-import {backendUrl} from "../../contants";
+import {backendUrl} from "../../constants";
 
-export const getAddress = createAsyncThunk(
-  "getAddress/address",
-  async ({id, token}) => {
-    try {
-      const response = await axios.get(
-        `${backendUrl}/api/secured/getAddressByUserId/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+export const getAddress = createAsyncThunk("getAddress/address", async () => {
+  try {
+    const response = await axios.get(
+      `${backendUrl}/api/secured/getAddressByUserId`,
+      {
+        withCredentials: true,
+      }
+    );
 
-      const data = response.data;
+    const data = response.data;
 
-      return data;
-    } catch (error) {
-      new Error(error.message);
-    }
+    return data;
+  } catch (error) {
+    new Error(error.message);
   }
-);
+});
 
 export const updateAddress = createAsyncThunk(
   "updateAddress/address",

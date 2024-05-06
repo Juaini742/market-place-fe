@@ -1,11 +1,14 @@
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import RootRouter from "./router";
 import store from "./store/store";
+import { AppContextProvider } from "./middleware/AppContext";
 
 function App() {
   return (
     <Provider store={store}>
-      <RootRouter />
+      <AppContextProvider>
+        <RootRouter />
+      </AppContextProvider>
     </Provider>
   );
 }
