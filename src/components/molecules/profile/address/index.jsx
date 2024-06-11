@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {Button} from "../../../atoms";
-import {updateAddress} from "../../../../store/actions/address.action";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button } from "../../../atoms";
+import { updateAddress } from "../../../../store/actions/address.action";
 import useAddress from "../../../../hooks/useAddress";
 
 function AddressProfil() {
@@ -25,21 +25,21 @@ function AddressProfil() {
     });
   }, [address]);
 
-  const hanldeChange = (e) => {
-    const {name, value} = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const hanldeSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateAddress({formData, id: address.id}));
+    dispatch(updateAddress({ formData, id: address.id }));
   };
 
   return (
-    <form onSubmit={hanldeSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="mt-5">
         <label htmlFor="city" className="block">
           City
@@ -48,7 +48,7 @@ function AddressProfil() {
           type="text"
           id="city"
           value={formData.city}
-          onChange={hanldeChange}
+          onChange={handleChange}
           name="city"
           className="border h-10 border-black rounded-md w-full pl-3"
         />
@@ -61,7 +61,7 @@ function AddressProfil() {
           type="number"
           id="postal_code"
           value={formData.postal_code}
-          onChange={hanldeChange}
+          onChange={handleChange}
           name="postal_code"
           className="border h-10 border-black rounded-md w-full pl-3"
         />
@@ -74,7 +74,7 @@ function AddressProfil() {
           type="text"
           id="privince"
           value={formData.privince}
-          onChange={hanldeChange}
+          onChange={handleChange}
           name="privince"
           className="border h-10 border-black rounded-md w-full pl-3"
         />
@@ -87,7 +87,7 @@ function AddressProfil() {
           type="text"
           id="country"
           value={formData.country}
-          onChange={hanldeChange}
+          onChange={handleChange}
           name="country"
           className="border h-10 border-black rounded-md w-full pl-3"
         />
@@ -100,7 +100,7 @@ function AddressProfil() {
           type="text"
           id="address"
           value={formData.address}
-          onChange={hanldeChange}
+          onChange={handleChange}
           name="address"
           className="border h-10 border-black rounded-md w-full pl-3"
         />

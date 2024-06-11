@@ -22,15 +22,13 @@ export const getAddress = createAsyncThunk("getAddress/address", async () => {
 
 export const updateAddress = createAsyncThunk(
   "updateAddress/address",
-  async ({id, token, formData}) => {
+  async ({id, formData}) => {
     try {
       const response = await axios.put(
         `${backendUrl}/api/secured/updateAddress/${id}`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       );
 

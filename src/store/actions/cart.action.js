@@ -19,15 +19,20 @@ export const getCartAction = createAsyncThunk("getCart/cart", async () => {
 // ADD CART BY PRODUCT ID
 export const addCartAction = createAsyncThunk(
   "addCart/cart",
-  async ({id, formData}, {dispatch}) => {
+  async ({id, data}, {dispatch}) => {
     try {
+
       const response = await axios.post(
         `${backendUrl}/api/secured/cart/${id}`,
-        formData,
+        data,
         {
           withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       );
+
 
       notification.success({
         message: "Success",

@@ -65,15 +65,13 @@ export const getCommentByProductIdAction = createAsyncThunk(
 // ADD COMMENT BY PRODUCT ID
 export const addCommentAction = createAsyncThunk(
   "addComment/comment",
-  async ({token, id, formData}) => {
+  async ({ id, formData}) => {
     try {
       const response = await axios.post(
         `${backendUrl}/api/secured/addComment/${id}`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true
         }
       );
 
@@ -91,15 +89,13 @@ export const addCommentAction = createAsyncThunk(
 
 export const updateCommentAction = createAsyncThunk(
   "updateComment/comment",
-  async ({token, id, formData}) => {
+  async ({ id, formData}) => {
     try {
       const response = await axios.put(
         `${backendUrl}/api/secured/updateComment/${id}`,
         formData,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        withCredentials: true,
         }
       );
 
@@ -117,15 +113,13 @@ export const updateCommentAction = createAsyncThunk(
 
 export const deleteCartAction = createAsyncThunk(
   "deleteCart/cart",
-  async ({token, id}) => {
+  async (id) => {
     try {
       const response = await axios.delete(
         `${backendUrl}/api/secured/deleteCart/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+          withCredentials: true,
+          }
       );
 
       notification.success({

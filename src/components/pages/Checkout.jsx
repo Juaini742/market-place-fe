@@ -21,7 +21,9 @@ function CheckoutPage(props) {
     quantities: dataCheckSelected.map((item) => item.quantity),
   });
 
-  const hanldeChange = (selectedBank) => {
+  console.log(formData);
+
+  const handleChange = (selectedBank) => {
     const name = banks.find((data) => data.code === selectedBank);
     setFormData((prev) => ({
       ...prev,
@@ -43,7 +45,7 @@ function CheckoutPage(props) {
     };
   }, []);
 
-  const hanldeSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postShipping({ id: address.id, formData }));
   };
@@ -104,7 +106,7 @@ function CheckoutPage(props) {
 
               <div className="w-full">
                 <Button
-                  onClick={hanldeSubmit}
+                  onClick={handleSubmit}
                   variant="primary"
                   className={`py-2 px-3 text-sm w-full ${
                     formData.payment === null ? "cursor-not-allowed" : ""
@@ -149,7 +151,7 @@ function CheckoutPage(props) {
             <div className="mt-2 flex flex-col gap-2 w-full">
               <span>Bank</span>
               <Select
-                onChange={(selectedOption) => hanldeChange(selectedOption)}
+                onChange={(selectedOption) => handleChange(selectedOption)}
                 value={formData.payment}
                 className="w-full"
                 placeholder="Select your bank"

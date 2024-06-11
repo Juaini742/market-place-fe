@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {getCommentByIdAction} from "../store/actions/comment.action";
 
-function useSingleComment({id}) {
+function useSingleComment(id) {
   const dispatch = useDispatch();
   const singleComment = useSelector((state) => state.comment.single);
 

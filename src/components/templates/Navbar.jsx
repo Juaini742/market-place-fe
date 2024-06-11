@@ -5,20 +5,22 @@ import { logoutAction } from "../../store/actions/user.action";
 import { getProductAction } from "../../store/actions/product.action";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
-// import useAuth from "../../hooks/useAuthzxczx";
 import { useDispatch } from "react-redux";
+import { useAppContext } from "../../middleware/AppContext";
+import useCart from "../../hooks/useCart";
 
 function Navbar() {
-  // const users = useAuth();
+  const { cart } = useCart();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAppContext();
   const [search, setSearch] = useState("");
 
-  const hanldeLogout = () => {
+  const handleLogout = () => {
     dispatch(logoutAction({ navigate }));
   };
 
-  const hanldeSearch = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     dispatch(getProductAction({ keyword: search }));
   };
@@ -30,7 +32,7 @@ function Navbar() {
           <h1 className="md:text-2xl font-bold">Myfashion</h1>
         </div>
         <form
-          onSubmit={hanldeSearch}
+          onSubmit={handleSearch}
           className="w-full relative overflow-hidden"
         >
           <input
@@ -65,20 +67,20 @@ function Navbar() {
                   <Button>Register</Button>
                 </Link>
               ) : (
-                <Button onClick={hanldeLogout}>Logout</Button>
+                <Button onClick={handleLogout}>Logout</Button>
               )}
             </li> */}
-            <Button onClick={hanldeLogout}>Logout</Button>
+            <Button onClick={handleLogout}>Logout</Button>
           </ul>
         </div>
         <Link to="/cart">
           <button className="relative h-10 w-10 bg-gray-300 rounded-full flex justify-center items-center">
             <SlBasket />
-            {/* {!users ? null : (
+            {isLoggedIn && (
               <span className="absolute bg-red-500 h-5 w-5 flex items-center justify-center text-xs text-white rounded-full -top-1 -right-2">
                 {cart?.length}
               </span>
-            )} */}
+            )}
           </button>
         </Link>
       </div>

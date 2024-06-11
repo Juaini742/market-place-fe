@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import {Rate} from "antd";
-import {Button} from "../../../../atoms";
-import {Link} from "react-router-dom";
+import { Rate } from "antd";
+import { Button } from "../../../../atoms";
+import { Link } from "react-router-dom";
 import useComment from "../../../../../hooks/useComment";
 
 // eslint-disable-next-line no-unused-vars
@@ -32,7 +32,7 @@ function HistoryComments() {
               <div className="flex gap-1 text-yellow-500">
                 <Rate disabled defaultValue={item.rating} />
               </div>
-              <h4 className="font-bold">{item.user_id.name}</h4>
+              <h4 className="font-bold">{item.User.name}</h4>
               <p className="text-gray-400">{item.message}</p>
             </>
           )}
@@ -40,17 +40,14 @@ function HistoryComments() {
             <div className="flex items-center gap-3">
               <div className="mt-3 flex gap-2">
                 <div className="w-16 overflow-hidden flex items-center">
-                  <img
-                    src={item.product_id.img}
-                    alt={item.product_id.product_name}
-                  />
+                  <img src={item.Product.img} alt={item.Product.product_name} />
                 </div>
                 <div className="flex flex-col w-full md:w-72">
                   <label className="font-bold text-xs">
-                    {item.product_id.product_name}
+                    {item.Product.product_name}
                   </label>
                   <span className="text-xs">
-                    Price: IDR. {item.product_id.price}
+                    Price: IDR. {item.Product.price}
                   </span>
                 </div>
               </div>

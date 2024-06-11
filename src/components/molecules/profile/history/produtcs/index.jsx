@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import BlankData from "../../../Empty";
 
-function HistoryProducts({checkout}) {
+function HistoryProducts({ checkout }) {
   return (
     <>
       {checkout.length > 0 ? (
@@ -21,7 +21,7 @@ function HistoryProducts({checkout}) {
                   </label>
                   <span className="text-xs">Size: {item.size}</span>
                   <span className="text-xs">color: {item.color}</span>
-                  <span className="text-xs">Quanity: {item.quantiy}</span>
+                  <span className="text-xs">Quantity: {item.quantity}</span>
                   <span className="text-xs">
                     Price: IDR. {item.product_id.price}
                   </span>

@@ -1,14 +1,14 @@
-import {IoMdArrowRoundBack} from "react-icons/io";
-import {Button, Container} from "../../../../atoms";
-import {Rate, Input} from "antd";
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {updateCommentAction} from "../../../../../store/actions/comment.action";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { Button, Container } from "../../../../atoms";
+import { Rate, Input } from "antd";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateCommentAction } from "../../../../../store/actions/comment.action";
 import useSingleComment from "../../../../../hooks/useSingleComment";
 
 function HistoryUpdateComments() {
-  const {id} = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const singleComment = useSingleComment(id);
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ function HistoryUpdateComments() {
     });
   }, [singleComment]);
 
-  const hanldeInputChange = (e) => {
+  const handleInputChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -37,9 +37,9 @@ function HistoryUpdateComments() {
     }));
   };
 
-  const hanldeSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateCommentAction({formData, id}));
+    dispatch(updateCommentAction({ formData, id }));
   };
   return (
     <>
@@ -65,7 +65,7 @@ function HistoryUpdateComments() {
               type="text"
               id="message"
               name="message"
-              onChange={hanldeInputChange}
+              onChange={handleInputChange}
               value={formData.message}
             />
           </div>
@@ -74,22 +74,22 @@ function HistoryUpdateComments() {
               <div className="mt-3 flex gap-2">
                 <div className="w-16 overflow-hidden flex items-center">
                   <img
-                    src={singleComment.product_id?.img}
-                    alt={singleComment.product_id?.product_name}
+                    src={singleComment.Product?.img}
+                    alt={singleComment.Product?.product_name}
                   />
                 </div>
                 <div className="flex flex-col w-full md:w-72">
                   <label className="font-bold text-xs">
-                    {singleComment.product_id?.product_name}
+                    {singleComment.Product?.product_name}
                   </label>
                   <span className="text-xs">
-                    Price: IDR. {singleComment.product_id?.price}
+                    Price: IDR. {singleComment.Product?.price}
                   </span>
                 </div>
               </div>
               <div className="w-full">
                 <Button
-                  onClick={hanldeSubmit}
+                  onClick={handleSubmit}
                   variant="primary"
                   className="w-full py-2"
                 >

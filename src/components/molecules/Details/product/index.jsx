@@ -22,7 +22,7 @@ function DetailsProduct() {
   const dispatch = useDispatch();
   const { products } = useProductById({ id });
   const { isLoggedIn } = useAppContext();
-  const [selectedComonent, setSelectedComonent] = useState("description");
+  const [selectedComment, setSelectedComment] = useState("description");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [isSizeSelected, setIsSizeSelected] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -32,7 +32,7 @@ function DetailsProduct() {
     size: "",
   });
 
-  const hanldeAddQuantity = () => {
+  const handleAddQuantity = () => {
     const result = quantity + 1;
     setQuantity(result);
 
@@ -42,7 +42,7 @@ function DetailsProduct() {
     }));
   };
 
-  const hanldeMinQuantity = () => {
+  const handleMinQuantity = () => {
     if (quantity > 1) {
       const result = quantity - 1;
       setQuantity(result);
@@ -70,15 +70,15 @@ function DetailsProduct() {
     setIsSizeSelected(true);
   };
 
-  const hanldeToDesc = () => {
-    setSelectedComonent("description");
+  const handleToDesc = () => {
+    setSelectedComment("description");
   };
 
-  const hanldeToRating = () => {
-    setSelectedComonent("rating");
+  const handleToRating = () => {
+    setSelectedComment("rating");
   };
 
-  const hanldeCart = (id) => {
+  const handleCart = (id) => {
     if (isColorSelected && isSizeSelected) {
       if (!isLoggedIn) {
         return notification.error({
@@ -87,7 +87,13 @@ function DetailsProduct() {
         });
       }
 
-      dispatch(addCartAction({ id, formData, dispatch })).then(() => {
+      const data = {
+        quantity: formData.quantity,
+        color: formData.color.name,
+        size: formData.size.name,
+      };
+
+      dispatch(addCartAction({ id, data, dispatch })).then(() => {
         dispatch(getCartAction());
       });
     }
@@ -102,7 +108,7 @@ function DetailsProduct() {
   return (
     <Container className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
-        <div className="h-full md:h-[540px] lg:h-[700px] flex items-center overflow-hidden">
+        <div className="h-full md:h-[540px] lg:h-[700px] flex justify-center items-center overflow-hidden">
           <img
             src={
               products?.product?.img === ""
@@ -110,6 +116,7 @@ function DetailsProduct() {
                 : products?.product?.img
             }
             alt={products?.product?.product_name}
+            className="lg:w-[500px]"
           />
         </div>
         <div className="flex flex-col gap-3">
@@ -128,7 +135,7 @@ function DetailsProduct() {
             <span className="text-gray-400">Select Colors</span>
             <form className="flex gap-4 mt-3 flex-wrap">
               {products?.colorData?.map((color, index) => (
-                <div key={index}>
+                <div key={index + 1}>
                   <input
                     type="radio"
                     className="opacity-0 absolute radio"
@@ -151,7 +158,7 @@ function DetailsProduct() {
             <span className="text-gray-400">Choose Size</span>
             <form className="flex gap-4 mt-3">
               {products?.sizeData?.map((size, index) => (
-                <div key={index}>
+                <div key={index + 1}>
                   <input
                     type="radio"
                     className="opacity-0 absolute radio"
@@ -175,17 +182,17 @@ function DetailsProduct() {
           </span>
           <div className="flex w-full gap-2">
             <div className="flex bg-gray-300 py-1 px-5 rounded-full">
-              <button onClick={hanldeAddQuantity} className="px-4">
+              <button onClick={handleAddQuantity} className="px-4">
                 <BsPlus />
               </button>
               <span className="text-xl">{quantity}</span>
-              <button onClick={hanldeMinQuantity} className="px-4">
+              <button onClick={handleMinQuantity} className="px-4">
                 <HiMinus />
               </button>
             </div>
             <div className="w-full">
               <Button
-                onClick={() => hanldeCart(products?.product?.id)}
+                onClick={() => handleCart(products?.product?.id)}
                 variant="primary-rounded"
                 className={`py-2 w-full ${
                   isColorSelected && isSizeSelected
@@ -211,29 +218,27 @@ function DetailsProduct() {
       <div className="mt-16">
         <div className="flex w-full justify-center gap-5 pb-4 border-b-2">
           <button
-            onClick={hanldeToDesc}
+            onClick={handleToDesc}
             className={
-              selectedComonent === "description"
-                ? "text-black"
-                : "text-gray-400"
+              selectedComment === "description" ? "text-black" : "text-gray-400"
             }
           >
             Product Details
           </button>
           <button
-            onClick={hanldeToRating}
+            onClick={handleToRating}
             className={
-              selectedComonent === "rating" ? "text-black" : "text-gray-400"
+              selectedComment === "rating" ? "text-black" : "text-gray-400"
             }
           >
             Rating and Reviews
           </button>
         </div>
         <div className="mt-5">
-          {selectedComonent === "description" && (
+          {selectedComment === "description" && (
             <DescriptionProduct products={products} />
           )}
-          {selectedComonent === "rating" && <RatingProduct id={id} />}
+          {selectedComment === "rating" && <RatingProduct id={id} />}
         </div>
       </div>
 

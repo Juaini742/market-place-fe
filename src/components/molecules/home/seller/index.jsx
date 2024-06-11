@@ -17,7 +17,7 @@ function HomeSeller() {
             className="p-2 rounded-lg hover:bg-gray-200 trans-300 group relative"
           >
             <Link to={`/detail/${item.id}`}>
-              <div className="h-60 overflow-hidden flex items-center">
+              <div className="h-60 overflow-hidden flex items-center justify-center">
                 <img
                   src={item.img}
                   alt={item.product_name}

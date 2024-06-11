@@ -11,8 +11,6 @@ function CartForm(props) {
     0
   );
 
-  console.log(dataCheckSelected);
-
   const handleVisibleCheckout = () => {
     if (dataCheckSelected.length > 0) {
       setVisibleCheckout(!visibleCheckout);
