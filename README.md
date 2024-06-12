@@ -5,7 +5,11 @@
 
 # MyFashion Frontend
 
+- [Backend Link](https://github.com/Juaini742/market-place-be)
+
 ## Overview
+
+![Juaini](./public/preview.jpeg)
 
 Welcome to the MyFashion Frontend repository! This frontend application complements the MyFashion backend, providing users with an intuitive interface to explore fashion content, discover trends, and engage with their favorite brands.
 
