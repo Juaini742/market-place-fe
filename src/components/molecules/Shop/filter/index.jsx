@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import {IoMdCloseCircle} from "react-icons/io";
+import { IoMdCloseCircle } from "react-icons/io";
 
 function ShopFilterProduct(props) {
-  const {visible, hanldeVisibleFilter, sortOptions, handleSort} = props;
+  const { visible, handleVisibleFilter, sortOptions, handleSort } = props;
   return (
     <div
       className={` md:flex fixed md:static z-30 bg-white left-0 right-0 top-0 bottom-0 px-10 md:px-0 flex-col ${
@@ -12,7 +12,7 @@ function ShopFilterProduct(props) {
       <div className="mt-10 flex flex-col gap-3 border-b-2 pb-5">
         <h3 className="font-bold">Products Filters</h3>
         <div className="font-bold block md:hidden absolute top-5 right-5">
-          <button onClick={hanldeVisibleFilter} className="text-xl">
+          <button onClick={handleVisibleFilter} className="text-xl">
             <IoMdCloseCircle />
           </button>
         </div>

@@ -90,7 +90,11 @@ export const updateUserAction = createAsyncThunk(
         formData,
         {
           withCredentials: true,
-        }
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        },
+        
       );
 
       const data = response.data;

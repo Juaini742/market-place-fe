@@ -3,11 +3,9 @@ import Template from "../templates";
 
 function ProductDetailsPage() {
   return (
-    <>
-      <Template>
-        <DetailsProduct />
-      </Template>
-    </>
+    <Template>
+      <DetailsProduct />
+    </Template>
   );
 }
 

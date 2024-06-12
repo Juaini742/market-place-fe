@@ -7,7 +7,7 @@ import useProducts from "../../../../hooks/useProducts";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
 function RecomendProduct() {
-  const products = useProducts();
+  const { products } = useProducts();
   return (
     <Swiper
       spaceBetween={30}

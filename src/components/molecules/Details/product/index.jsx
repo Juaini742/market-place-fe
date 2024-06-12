@@ -20,8 +20,9 @@ import {
 function DetailsProduct() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { products } = useProductById({ id });
   const { isLoggedIn } = useAppContext();
+  const { products, isLoading } = useProductById({ id });
+  const [isSubmit, setIsSubmit] = useState(false);
   const [selectedComment, setSelectedComment] = useState("description");
   const [isColorSelected, setIsColorSelected] = useState(false);
   const [isSizeSelected, setIsSizeSelected] = useState(false);
@@ -79,6 +80,7 @@ function DetailsProduct() {
   };
 
   const handleCart = (id) => {
+    setIsSubmit(true);
     if (isColorSelected && isSizeSelected) {
       if (!isLoggedIn) {
         return notification.error({
@@ -94,6 +96,7 @@ function DetailsProduct() {
       };
 
       dispatch(addCartAction({ id, data, dispatch })).then(() => {
+        setIsSubmit(false);
         dispatch(getCartAction());
       });
     }
@@ -109,27 +112,43 @@ function DetailsProduct() {
     <Container className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
         <div className="h-full md:h-[540px] lg:h-[700px] flex justify-center items-center overflow-hidden">
-          <img
-            src={
-              products?.product?.img === ""
-                ? "../img/empty.jpg"
-                : products?.product?.img
-            }
-            alt={products?.product?.product_name}
-            className="lg:w-[500px]"
-          />
+          {isLoading ? (
+            <div className="w-full h-full bg-gray-200 animate-pulse" />
+          ) : (
+            <img
+              src={
+                products?.product?.img === ""
+                  ? "../img/empty.jpg"
+                  : products?.product?.img
+              }
+              alt={products?.product?.product_name}
+              className="lg:w-[500px]"
+            />
+          )}
         </div>
         <div className="flex flex-col gap-3">
           <div className="border-b-2 pb-5">
-            <h2 className="text-2xl font-bold mb-4">
-              {products?.product?.product_name}
-            </h2>
-            <span className="text-2xl font-bold">
-              IDR. {newPrice.toFixed(3)}
-            </span>
-            <p className="text-gray-500 text-sm mt-5">
-              {products?.product?.short_description}
-            </p>
+            {isLoading ? (
+              <div className="w-full h-8 bg-gray-200 animate-pulse" />
+            ) : (
+              <h2 className="text-2xl font-bold mb-4">
+                {products?.product?.product_name}
+              </h2>
+            )}
+            {isLoading ? (
+              <div className="w-full h-8 bg-gray-200 animate-pulse my-2" />
+            ) : (
+              <span className="text-2xl font-bold">
+                IDR. {newPrice.toFixed(3)}
+              </span>
+            )}
+            {isLoading ? (
+              <div className="w-full h-24 bg-gray-200 animate-pulse" />
+            ) : (
+              <p className="text-gray-500 text-sm mt-5">
+                {products?.product?.short_description}
+              </p>
+            )}
           </div>
           <div className="border-b-2 pb-5">
             <span className="text-gray-400">Select Colors</span>
@@ -195,13 +214,13 @@ function DetailsProduct() {
                 onClick={() => handleCart(products?.product?.id)}
                 variant="primary-rounded"
                 className={`py-2 w-full ${
-                  isColorSelected && isSizeSelected
+                  isColorSelected && isSizeSelected && !isSubmit
                     ? ""
                     : "cursor-not-allowed opacity-50"
                 }`}
-                disabled={!isColorSelected || !isSizeSelected}
+                disabled={!isColorSelected || !isSizeSelected || isSubmit}
               >
-                Add to Cart
+                {isSubmit ? "Loading..." : "Add to Cart"}
               </Button>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import {Collapse} from "antd";
-import {Container} from "../../../atoms";
+import { Collapse } from "antd";
+import { Container } from "../../../atoms";
 import {
   FaHistory,
   FaMapMarkerAlt,
@@ -12,7 +12,7 @@ import AddressProfil from "../address";
 import AddProductProfile from "../add product";
 import MyProductProfile from "../my product";
 import HistoryProfile from "../history";
-import {useState} from "react";
+import { useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 
 function MainProfile() {

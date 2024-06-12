@@ -1,5 +1,5 @@
-import {Container} from "../atoms";
-import {useState} from "react";
+import { Container } from "../atoms";
+import { useState } from "react";
 import ShopFilterProduct from "../molecules/Shop/filter";
 import ShopProductList from "../molecules/Shop/product list";
 import Template from "../templates";
@@ -13,7 +13,7 @@ function ShopPage() {
     sortOrder: "",
   });
 
-  const hanldeVisibleFilter = () => {
+  const handleVisibleFilter = () => {
     setVisible(!visible);
   };
 
@@ -33,12 +33,12 @@ function ShopPage() {
         <Container className="mt-10 flex gap-5 flex-col md:flex-row">
           <ShopFilterProduct
             visible={visible}
-            hanldeVisibleFilter={hanldeVisibleFilter}
+            handleVisibleFilter={handleVisibleFilter}
             sortOptions={sortOptions}
             handleSort={handleSort}
           />
           <div className="font-bold block md:hidden">
-            <button onClick={hanldeVisibleFilter} className="border-b-2">
+            <button onClick={handleVisibleFilter} className="border-b-2">
               Filter Products
             </button>
           </div>

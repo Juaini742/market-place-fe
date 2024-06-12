@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getProductAction} from "../store/actions/product.action";
 
 function useProducts({
@@ -10,6 +10,7 @@ function useProducts({
   sortOrder,
 } = {}) {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const products = useSelector((state) => state.products.data);
 
   useEffect(() => {
@@ -18,10 +19,11 @@ function useProducts({
         page,
         filters: {sortBySold, sortByPrice, sortByLowestPrice, sortOrder},
       })
-    );
+      
+    ).then(() => setIsLoading(false) );
   }, [dispatch, page, sortBySold, sortByPrice, sortByLowestPrice, sortOrder]);
 
-  return products;
+  return {products, isLoading};
 }
 
 export default useProducts;

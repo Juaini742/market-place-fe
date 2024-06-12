@@ -1,9 +1,10 @@
-import {useState} from "react";
-import {Link} from "react-router-dom";
-import {registerAction} from "../../store/actions/user.action";
-import {useDispatch} from "react-redux";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { registerAction } from "../../store/actions/user.action";
+import { useDispatch } from "react-redux";
 function RegisterPage() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -11,17 +12,21 @@ function RegisterPage() {
   });
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData((prev) => ({...prev, [name]: value}));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerAction(formData));
-    setFormData({
-      username: "",
-      email: "",
-      password: "",
+    setIsLoading(true);
+
+    dispatch(registerAction(formData)).then(() => {
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
+      setIsLoading(false);
     });
   };
 
@@ -53,7 +58,7 @@ function RegisterPage() {
               />
             </div>
             <div className="mt-5 flex gap-3 flex-col">
-              <label htmlFor="emial" className="text-sm">
+              <label htmlFor="email" className="text-sm">
                 Email Address
               </label>
               <input
@@ -101,7 +106,9 @@ function RegisterPage() {
             </div>
 
             <div className="mt-5">
-              <button className="py-3 w-full btn-primary">Signup</button>
+              <button disabled={isLoading} className="py-3 w-full btn-primary">
+                {isLoading ? "Loading..." : "Sign Up"}
+              </button>
             </div>
           </form>
         </div>

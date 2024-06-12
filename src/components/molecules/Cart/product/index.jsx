@@ -13,10 +13,12 @@ import {
 } from "../../../../store/reducers/cart.slice";
 import BlankData from "../../Empty";
 import useCart from "../../../../hooks/useCart";
+import { useState } from "react";
 
 function CartProduct(props) {
-  const { checkSelected, setCheckSelected } = props;
   const { cart, dispatch } = useCart();
+  const [isDelete, setIsDelete] = useState({});
+  const { checkSelected, setCheckSelected } = props;
 
   const handleAddQuantity = (id, quantity) => {
     const newQ = quantity + 1;
@@ -31,12 +33,21 @@ function CartProduct(props) {
   };
 
   const handleDeleteCart = (itemId) => {
-    dispatch(deleteCartAction({ id: itemId })).then(() => {
-      dispatch(getCartAction());
-    });
+    setIsDelete((prev) => ({
+      ...prev,
+      [itemId]: true,
+    }));
+    dispatch(deleteCartAction({ id: itemId })).then(() =>
+      dispatch(getCartAction()).then(() =>
+        setIsDelete((prev) => ({
+          ...prev,
+          [itemId]: false,
+        }))
+      )
+    );
   };
 
-  const hanldeCheckboxChange = (id) => {
+  const handleCheckboxChange = (id) => {
     setCheckSelected((prevItem) => {
       if (prevItem.includes(id)) {
         return prevItem.filter((dataId) => dataId !== id);
@@ -61,7 +72,7 @@ function CartProduct(props) {
                   <input
                     type="checkbox"
                     checked={checkSelected.includes(item.id)}
-                    onChange={() => hanldeCheckboxChange(item.id)}
+                    onChange={() => handleCheckboxChange(item.id)}
                     id={`product-${index}`}
                   />
                 </div>
@@ -118,8 +129,11 @@ function CartProduct(props) {
               </div>
 
               <div className=" text-red-500 pt-9">
-                <button onClick={() => handleDeleteCart(item.id)}>
-                  <FaTrashCan />
+                <button
+                  disabled={isDelete[item.id]}
+                  onClick={() => handleDeleteCart(item.id)}
+                >
+                  {isDelete[item.id] ? "Loading..." : <FaTrashCan />}
                 </button>
               </div>
             </div>

@@ -1,11 +1,12 @@
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {unwrapResult} from "@reduxjs/toolkit";
-import {useState} from "react";
-import {loginAction} from "../../store/actions/user.action";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useState } from "react";
+import { loginAction } from "../../store/actions/user.action";
 
 function LoginPage() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,14 +14,17 @@ function LoginPage() {
   });
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData((prev) => ({...prev, [name]: value}));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const hanldeSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      const actLogin = await dispatch(loginAction(formData));
+      const actLogin = await dispatch(loginAction(formData)).then(() => {
+        setIsLoading(false);
+      });
 
       return unwrapResult(actLogin);
     } catch (error) {
@@ -35,7 +39,7 @@ function LoginPage() {
           <img src="../img/login.svg" alt="login" className="" />
         </div>
         <div className="box-border w-full md:w-1/2">
-          <form onSubmit={hanldeSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="">
               <h1 className="text-2xl font-semibold">Welcome to Myfashion</h1>
               <p className="text-gray-400">please login here</p>
@@ -96,7 +100,9 @@ function LoginPage() {
               </p>
             </div>
             <div className="mt-5">
-              <button className="py-3 w-full btn-primary">Login</button>
+              <button disabled={isLoading} className="py-3 w-full btn-primary">
+                {isLoading ? "Loading..." : "Login"}
+              </button>
             </div>
           </form>
         </div>

@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import {useEffect} from "react";
-import {Button} from "../../../atoms";
-import {useDispatch} from "react-redux";
-import {Radio} from "antd";
-import {updateUserAction} from "../../../../store/actions/user.action";
+import { useEffect, useState } from "react";
+import { Button } from "../../../atoms";
+import { useDispatch } from "react-redux";
+import { Radio } from "antd";
+import { updateUserAction } from "../../../../store/actions/user.action";
 
 function BiodataCategory(props) {
-  const {users, formData, setFormData, setPreviewImg} = props;
+  const { users, formData, setFormData, setPreviewImg } = props;
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const id = users.id;
@@ -24,31 +25,35 @@ function BiodataCategory(props) {
     }));
   }, [setFormData, users]);
 
-  const hanldeChange = (e) => {
-    const {name, value} = e.target;
-    setFormData((prev) => ({...prev, [name]: value === "" ? "" : value}));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value === "" ? "" : value }));
   };
 
-  const hanldeRadioChange = (e) => {
-    setFormData({...formData, sex: e.target.value});
+  const handleRadioChange = (e) => {
+    setFormData({ ...formData, sex: e.target.value });
   };
 
-  const hanldeFileChange = (e) => {
+  const handleFileChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.files[0],
+      file: e.target.files[0],
     }));
     const uploadPrev = e.target.files[0];
     setPreviewImg(URL.createObjectURL(uploadPrev));
   };
 
-  const hanldeSubmit = (e) => {
+  const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
-    dispatch(updateUserAction({formData, id}));
+
+    dispatch(updateUserAction({ formData, id })).then(() => {
+      setIsLoading(false);
+    });
   };
 
   return (
-    <form encType="multipart/form-data" onSubmit={hanldeSubmit}>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
       <div className="">
         <label htmlFor="" className="block">
           Avatar
@@ -57,7 +62,7 @@ function BiodataCategory(props) {
           type="file"
           name="file"
           accept="image/*"
-          onChange={hanldeFileChange}
+          onChange={handleFileChange}
           className="border h-10 py-1 border-black rounded-md w-full pl-2"
         />
       </div>
@@ -70,7 +75,7 @@ function BiodataCategory(props) {
           id="username"
           name="username"
           value={formData.username}
-          onChange={hanldeChange}
+          onChange={handleChange}
           className="border h-10 border-black rounded-md w-full pl-3"
           required
         />
@@ -84,7 +89,7 @@ function BiodataCategory(props) {
           id="name"
           name="name"
           value={formData.name}
-          onChange={hanldeChange}
+          onChange={handleChange}
           className="border h-10 border-black rounded-md w-full pl-3"
         />
       </div>
@@ -97,7 +102,7 @@ function BiodataCategory(props) {
           id="email"
           name="email"
           value={formData.email}
-          onChange={hanldeChange}
+          onChange={handleChange}
           className="border h-10 border-black rounded-md w-full pl-3"
           required
         />
@@ -111,7 +116,7 @@ function BiodataCategory(props) {
           id="phone"
           name="phone"
           value={formData.phone}
-          onChange={hanldeChange}
+          onChange={handleChange}
           className="border h-10 border-black rounded-md w-full pl-3"
         />
       </div>
@@ -124,20 +129,20 @@ function BiodataCategory(props) {
           id="store_name"
           name="store_name"
           value={formData.store_name}
-          onChange={hanldeChange}
+          onChange={handleChange}
           className="border h-10 border-black rounded-md w-full pl-3"
         />
       </div>
       <span>Gander</span>
       <div className="mt-2">
-        <Radio.Group onChange={hanldeRadioChange} value={formData.sex}>
+        <Radio.Group onChange={handleRadioChange} value={formData.sex}>
           <Radio value="male">Male</Radio>
           <Radio value="female">Female</Radio>
         </Radio.Group>
       </div>
       <div className="mt-5">
-        <Button variant="primary" className="py-2 w-full">
-          Save
+        <Button disabled={isLoading} variant="primary" className="py-2 w-full">
+          {isLoading ? "Loading..." : "Save"}
         </Button>
       </div>
     </form>

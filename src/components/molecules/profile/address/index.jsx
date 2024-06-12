@@ -5,8 +5,9 @@ import { updateAddress } from "../../../../store/actions/address.action";
 import useAddress from "../../../../hooks/useAddress";
 
 function AddressProfil() {
-  const dispatch = useDispatch();
   const address = useAddress();
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     city: "",
     postal_code: "",
@@ -35,7 +36,10 @@ function AddressProfil() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateAddress({ formData, id: address.id }));
+    setIsLoading(true);
+    dispatch(updateAddress({ formData, id: address.id })).then(() =>
+      setIsLoading(false)
+    );
   };
 
   return (
@@ -106,8 +110,8 @@ function AddressProfil() {
         />
       </div>
       <div>
-        <Button variant="primary" className="w-full py-2">
-          Save
+        <Button disabled={isLoading} variant="primary" className="w-full py-2">
+          {isLoading ? "Loading..." : "Save"}
         </Button>
       </div>
     </form>

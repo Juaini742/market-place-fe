@@ -1,17 +1,14 @@
-import {Button} from "../../../atoms";
-import {useDispatch} from "react-redux";
+import { Button } from "../../../atoms";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import {InboxOutlined} from "@ant-design/icons";
-import {message, Upload} from "antd";
-import {useState} from "react";
-const {Dragger} = Upload;
-import {Select, Space} from "antd";
-import {addproductAction} from "../../../../store/actions/product.action";
-import {sizes, colors} from "../../db";
+import { InboxOutlined } from "@ant-design/icons";
+import { message, notification, Upload } from "antd";
+import { useState } from "react";
+const { Dragger } = Upload;
+import { Select, Space } from "antd";
+import { sizes, colors } from "../../db";
 
 function AddProductProfile() {
-  const dispatch = useDispatch();
   const [previewImg, setPreviewImg] = useState(null);
   const [formData, setFormData] = useState({
     file: "",
@@ -31,7 +28,7 @@ function AddProductProfile() {
     multiple: true,
     action: previewImg,
     onChange(info) {
-      const {status, fileList} = info;
+      const { status, fileList } = info;
 
       if (status === "removed" && fileList && fileList.length > 0) {
         setFormData((prev) => ({
@@ -59,8 +56,8 @@ function AddProductProfile() {
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormData((prev) => ({...prev, [name]: value}));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (selectedValues) => {
@@ -78,16 +75,21 @@ function AddProductProfile() {
   };
 
   const handleQuillChange = (value) => {
-    setFormData((prev) => ({...prev, long_description: value}));
+    setFormData((prev) => ({ ...prev, long_description: value }));
   };
 
-  const hanldeSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addproductAction({formData}));
+
+    notification.warning({
+      message: "warning",
+      description: "This feature is coming soon",
+    });
+    // dispatch(addproductAction({ formData }));
   };
 
   return (
-    <form encType="multipart/form-data" onSubmit={hanldeSubmit}>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
       <div className="">
         <label htmlFor="" className="block mb-1">
           Image
@@ -110,6 +112,7 @@ function AddProductProfile() {
           Product Name
         </label>
         <input
+          readOnly
           type="text"
           id="product_name"
           name="product_name"
@@ -160,6 +163,7 @@ function AddProductProfile() {
           Stock
         </label>
         <input
+          readOnly
           type="number"
           id="stock"
           name="stock"
@@ -174,6 +178,7 @@ function AddProductProfile() {
           Category
         </label>
         <input
+          readOnly
           type="text"
           id="category"
           name="category"
@@ -188,6 +193,7 @@ function AddProductProfile() {
           Price
         </label>
         <input
+          readOnly
           type="number"
           id="price"
           name="price"
@@ -202,6 +208,7 @@ function AddProductProfile() {
           Short Description / Slug
         </label>
         <input
+          readOnly
           type="text"
           id="short_description"
           name="short_description"
@@ -216,6 +223,7 @@ function AddProductProfile() {
           Long Description
         </label>
         <ReactQuill
+          readOnly
           theme="snow"
           value={formData.long_description}
           onChange={handleQuillChange}
@@ -223,8 +231,8 @@ function AddProductProfile() {
         />
       </div>
       <div className="mt-20 md:mt-16">
-        <Button variant="primary" className="py-2 w-full">
-          Save
+        <Button variant="warning" className="py-2 w-full">
+          Coming Soon
         </Button>
       </div>
     </form>

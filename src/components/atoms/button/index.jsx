@@ -1,6 +1,6 @@
 function Button(props) {
   // eslint-disable-next-line react/prop-types
-  const {type, onClick, variant, className, children} = props;
+  const { type, onClick, variant, className, children, disabled } = props;
   let buttonStyle = "";
 
   switch (variant) {
@@ -19,6 +19,9 @@ function Button(props) {
     case "white":
       buttonStyle += "btn-white";
       break;
+    case "warning":
+      buttonStyle += "btn-warning";
+      break;
     default:
       buttonStyle += "";
       break;
@@ -28,6 +31,7 @@ function Button(props) {
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={` ${buttonStyle} ${className}`}
     >
       {children}
